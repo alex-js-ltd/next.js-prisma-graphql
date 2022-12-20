@@ -4,5 +4,5 @@ documents:
   - 'lib/**/*.graphql'
   - 'lib/**/*.ts'
 generates:
-  gql/:
+  generated/:
     preset: 'client'

@@ -1,6 +1,6 @@
 import request from 'graphql-request'
 import { useQuery } from '@tanstack/react-query'
-import { graphql } from 'graphql/client/gql'
+import { graphql } from 'generated/gql'
 
 const booksQueryDocument = graphql(/* GraphQL */ `
   query getBooks {

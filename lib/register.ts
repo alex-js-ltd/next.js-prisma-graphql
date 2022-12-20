@@ -1,7 +1,7 @@
 import request from 'graphql-request'
 import { useMutation } from '@tanstack/react-query'
-import { graphql } from 'graphql/client/gql'
-import { MutationRegisterArgs } from 'graphql/client/graphql'
+import { graphql } from 'generated/gql'
+import { MutationRegisterArgs } from 'generated/graphql'
 import { useRouter } from 'next/router'
 
 const registerMutationDocument = graphql(/* GraphQL */ `
