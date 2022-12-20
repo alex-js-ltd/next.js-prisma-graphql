@@ -1,0 +1,8 @@
+overwrite: true
+schema: './schema.graphql'
+documents:
+  - 'lib/**/*.graphql'
+  - 'lib/**/*.ts'
+generates:
+  gql/:
+    preset: 'client'

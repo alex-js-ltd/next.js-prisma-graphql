@@ -1,4 +1,4 @@
-import { MutationResolvers } from './generated-types'
+import { MutationResolvers } from './resolvers-types.generated'
 import { prisma } from 'lib/prisma'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'

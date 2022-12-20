@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { Context } from './index';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -50,19 +51,6 @@ export type User = {
   password: Scalars['String'];
   updatedAt: Scalars['Date'];
 };
-
-export type GetBooksQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetBooksQuery = { __typename?: 'Query', books: Array<{ __typename?: 'Book', id: number, title: string, author: string, coverImageUrl: string, publisher: string, synopsis: string, pageCount: number }> };
-
-export type RegisterMutationVariables = Exact<{
-  email: Scalars['String'];
-  password: Scalars['String'];
-}>;
-
-
-export type RegisterMutation = { __typename?: 'Mutation', register?: { __typename?: 'User', createdAt: any, email: string, id: number, password: string, updatedAt: any } | null };
 
 
 
@@ -155,7 +143,7 @@ export type ResolversParentTypes = {
   User: User;
 };
 
-export type BookResolvers<ContextType = ../../pages/api/graphql, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
+export type BookResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
   author?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   coverImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -170,15 +158,15 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
-export type MutationResolvers<ContextType = ../../pages/api/graphql, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password'>>;
 };
 
-export type QueryResolvers<ContextType = ../../pages/api/graphql, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   books?: Resolver<Array<ResolversTypes['Book']>, ParentType, ContextType>;
 };
 
-export type UserResolvers<ContextType = ../../pages/api/graphql, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -187,7 +175,7 @@ export type UserResolvers<ContextType = ../../pages/api/graphql, ParentType exte
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Resolvers<ContextType = ../../pages/api/graphql> = {
+export type Resolvers<ContextType = Context> = {
   Book?: BookResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
