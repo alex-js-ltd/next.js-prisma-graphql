@@ -1,0 +1,27 @@
+scalar Date
+
+type Book {
+  id: Int!
+  title: String!
+  author: String!
+  coverImageUrl: String!
+  publisher: String!
+  synopsis: String!
+  pageCount: Int!
+}
+
+type Query {
+  books: [Book!]!
+}
+
+type User {
+  id: Int!
+  createdAt: Date!
+  updatedAt: Date!
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  register(email: String!, password: String!): User
+}
