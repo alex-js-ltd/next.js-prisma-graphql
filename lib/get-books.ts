@@ -1,6 +1,8 @@
-import { gql } from '@apollo/client'
+import request from 'graphql-request'
+import { useQuery } from '@tanstack/react-query'
+import { graphql } from 'graphql/client/gql'
 
-export const GET_BOOKS = gql`
+const booksQueryDocument = graphql(/* GraphQL */ `
   query getBooks {
     books {
       id
@@ -12,4 +14,13 @@ export const GET_BOOKS = gql`
       pageCount
     }
   }
-`
+`)
+
+function useBooks() {
+  return useQuery({
+    queryKey: ['books'],
+    queryFn: async () =>
+      request('http://localhost:3000/api/graphql', booksQueryDocument),
+  })
+}
+export { useBooks }

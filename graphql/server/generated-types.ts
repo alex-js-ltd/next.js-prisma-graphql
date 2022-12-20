@@ -1,22 +1,10 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { Context } from './pages/api/graphql/index';
-import { GraphQLClient } from 'graphql-request';
-import { RequestInit } from 'graphql-request/dist/types.dom';
-import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
-
-function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
-  return async (): Promise<TData> => client.request({
-    document: query,
-    variables,
-    requestHeaders
-  });
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -167,7 +155,7 @@ export type ResolversParentTypes = {
   User: User;
 };
 
-export type BookResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
+export type BookResolvers<ContextType = ../../pages/api/graphql, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
   author?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   coverImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -182,15 +170,15 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
-export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = ../../pages/api/graphql, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password'>>;
 };
 
-export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<ContextType = ../../pages/api/graphql, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   books?: Resolver<Array<ResolversTypes['Book']>, ParentType, ContextType>;
 };
 
-export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+export type UserResolvers<ContextType = ../../pages/api/graphql, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -199,7 +187,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Resolvers<ContextType = Context> = {
+export type Resolvers<ContextType = ../../pages/api/graphql> = {
   Book?: BookResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
@@ -207,56 +195,3 @@ export type Resolvers<ContextType = Context> = {
   User?: UserResolvers<ContextType>;
 };
 
-
-
-export const GetBooksDocument = `
-    query getBooks {
-  books {
-    id
-    title
-    author
-    coverImageUrl
-    publisher
-    synopsis
-    pageCount
-  }
-}
-    `;
-export const useGetBooksQuery = <
-      TData = GetBooksQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables?: GetBooksQueryVariables,
-      options?: UseQueryOptions<GetBooksQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetBooksQuery, TError, TData>(
-      variables === undefined ? ['getBooks'] : ['getBooks', variables],
-      fetcher<GetBooksQuery, GetBooksQueryVariables>(client, GetBooksDocument, variables, headers),
-      options
-    );
-export const RegisterDocument = `
-    mutation register($email: String!, $password: String!) {
-  register(email: $email, password: $password) {
-    createdAt
-    email
-    id
-    password
-    updatedAt
-  }
-}
-    `;
-export const useRegisterMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      client: GraphQLClient,
-      options?: UseMutationOptions<RegisterMutation, TError, RegisterMutationVariables, TContext>,
-      headers?: RequestInit['headers']
-    ) =>
-    useMutation<RegisterMutation, TError, RegisterMutationVariables, TContext>(
-      ['register'],
-      (variables?: RegisterMutationVariables) => fetcher<RegisterMutation, RegisterMutationVariables>(client, RegisterDocument, variables, headers)(),
-      options
-    );

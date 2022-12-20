@@ -3,8 +3,12 @@ import type { NextPage } from 'next'
 import React, { ReactElement, cloneElement, FormEvent } from 'react'
 import { Button, Input, FormGroup, Spinner, ErrorMessage } from 'comps/lib'
 import { Modal, ModalContents, ModalOpenButton } from 'comps/modal'
+import { useBooks } from 'lib/get-books'
 
 const Home: NextPage = () => {
+  const { data } = useBooks()
+
+  console.log(data)
   return (
     <div
       css={{

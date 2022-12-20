@@ -3,7 +3,7 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { prisma } from 'lib/prisma'
 import { PrismaClient } from '@prisma/client'
 import { readFileSync } from 'fs'
-import resolvers from './resolvers'
+import resolvers from 'graphql/server/resolvers'
 import type { NextApiResponse } from 'next'
 
 export type Context = {
