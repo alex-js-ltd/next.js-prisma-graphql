@@ -4,18 +4,16 @@ const config: CodegenConfig = {
   schema: './schema.graphql',
   documents: './lib/**/*.ts',
   generates: {
-    './generated-types.ts': {
-      plugins: [
-        'typescript',
-        'typescript-operations',
-        'typescript-react-apollo',
-        'typescript-resolvers',
-      ],
+    './generated-types/': {
+      preset: 'client',
+      plugins: [],
     },
-  },
-
-  config: {
-    contextType: './pages/api/graphql/index#Context',
+    './pages/api/graphql/generated-types.ts': {
+      plugins: ['typescript', 'typescript-operations', 'typescript-resolvers'],
+      config: {
+        contextType: './index#Context',
+      },
+    },
   },
 }
 export default config
