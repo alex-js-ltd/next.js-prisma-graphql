@@ -4,14 +4,16 @@ const config: CodegenConfig = {
   schema: './schema.graphql',
   documents: './lib/**/*.ts',
   generates: {
-    './generated-types/': {
-      preset: 'client',
-      plugins: [],
-    },
-    './pages/api/graphql/generated-types.ts': {
-      plugins: ['typescript', 'typescript-operations', 'typescript-resolvers'],
+    './generated-types.ts': {
+      plugins: [
+        'typescript',
+        'typescript-operations',
+        'typescript-resolvers',
+        'typescript-react-query',
+      ],
       config: {
-        contextType: './index#Context',
+        contextType: './pages/api/graphql/index#Context',
+        fetcher: 'graphql-request',
       },
     },
   },
