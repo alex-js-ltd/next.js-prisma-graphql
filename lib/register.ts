@@ -22,6 +22,10 @@ function useRegister() {
         email,
         password,
       }),
+
+    onSuccess(data) {
+      console.log(data)
+    },
   })
 }
 export { useRegister }

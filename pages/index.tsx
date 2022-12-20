@@ -3,12 +3,11 @@ import type { NextPage } from 'next'
 import React, { ReactElement, cloneElement, FormEvent } from 'react'
 import { Button, Input, FormGroup, Spinner, ErrorMessage } from 'comps/lib'
 import { Modal, ModalContents, ModalOpenButton } from 'comps/modal'
-import { useBooks } from 'lib/get-books'
+import { useRegister } from 'lib/register'
 
 const Home: NextPage = () => {
-  const { data } = useBooks()
+  const register = useRegister()
 
-  console.log(data)
   return (
     <div
       css={{
@@ -45,11 +44,10 @@ const Home: NextPage = () => {
             <Button variant="secondary">Register</Button>
           </ModalOpenButton>
           <ModalContents aria-label="Registration form" title="Register">
-            {/* <LoginForm
+            <LoginForm
               auth={register}
-              submitButton={<Button variant='secondary'>Register</Button>}
-            /> */}
-            <>hello</>
+              submitButton={<Button variant="secondary">Register</Button>}
+            />
           </ModalContents>
         </Modal>
       </div>
