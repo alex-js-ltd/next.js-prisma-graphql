@@ -11,7 +11,6 @@ export default Books
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const cookie = req.cookies.ACCESS_TOKEN || ''
 
-  console.log(cookie)
   try {
     const user = validateToken(cookie)
   } catch (error) {
