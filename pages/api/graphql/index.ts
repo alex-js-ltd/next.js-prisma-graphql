@@ -19,6 +19,7 @@ const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' })
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
 })
 
 export default startServerAndCreateNextHandler(server, {
@@ -30,11 +31,13 @@ export default startServerAndCreateNextHandler(server, {
 })
 
 async function getUser(token: string) {
-  const { id }: any = jwt.verify(token, 'hello')
+  let user
+  try {
+    const { id }: any = jwt.verify(token, 'hello')
+    user = await prisma.user.findUnique({
+      where: { id },
+    })
+  } catch (error) {}
 
-  const user = await prisma.user.findUnique({
-    where: { id },
-  })
-
-  return user
+  return user ? user : null
 }
