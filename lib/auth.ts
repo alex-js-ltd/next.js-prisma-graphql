@@ -29,6 +29,18 @@ const loginMutationDocument = graphql(/* GraphQL */ `
   }
 `)
 
+const logoutMutationDocument = graphql(/* GraphQL */ `
+  mutation logout {
+    logout {
+      id
+      createdAt
+      updatedAt
+      email
+      password
+    }
+  }
+`)
+
 type Props = MutationLoginArgs | MutationRegisterArgs
 
 function useAuth(document: RequestDocument) {
@@ -49,4 +61,17 @@ function useAuth(document: RequestDocument) {
   })
 }
 
-export { useAuth }
+function useLogout() {
+  const router = useRouter()
+
+  return useMutation({
+    mutationFn: () => req(logoutMutationDocument),
+
+    onSuccess(data) {
+      console.log(data)
+      router.push('/')
+    },
+  })
+}
+
+export { useAuth, useLogout }

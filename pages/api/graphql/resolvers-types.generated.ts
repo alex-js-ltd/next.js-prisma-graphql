@@ -30,6 +30,7 @@ export type Book = {
 export type Mutation = {
   __typename?: 'Mutation';
   login?: Maybe<User>;
+  logout?: Maybe<User>;
   register?: Maybe<User>;
 };
 
@@ -167,6 +168,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
+  logout?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password'>>;
 };
 

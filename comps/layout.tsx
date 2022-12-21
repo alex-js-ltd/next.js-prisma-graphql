@@ -5,7 +5,10 @@ import { Button, StyledLink } from 'comps/lib'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 
+import { useLogout } from 'lib/auth'
+
 const Layout = ({ children }: { children: ReactElement }) => {
+  const logout = useLogout()
   return (
     <Fragment>
       <div
@@ -18,7 +21,11 @@ const Layout = ({ children }: { children: ReactElement }) => {
         }}
       >
         user
-        <Button variant="secondary" css={{ marginLeft: '10px' }}>
+        <Button
+          variant="secondary"
+          css={{ marginLeft: '10px' }}
+          onClick={() => logout.mutateAsync()}
+        >
           Logout
         </Button>
       </div>

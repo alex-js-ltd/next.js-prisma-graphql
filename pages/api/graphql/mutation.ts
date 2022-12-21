@@ -78,6 +78,22 @@ const Mutation: MutationResolvers = {
 
     return null
   },
+
+  async logout(_parent, args, ctx) {
+    ctx.res.setHeader(
+      'Set-Cookie',
+      cookie.serialize('ACCESS_TOKEN', '', {
+        httpOnly: true,
+        maxAge: 0,
+        path: '/',
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        expires: new Date(Date.now()),
+      }),
+    )
+
+    return null
+  },
 }
 
 export default Mutation
