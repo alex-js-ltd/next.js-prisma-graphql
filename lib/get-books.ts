@@ -1,4 +1,4 @@
-import request from 'graphql-request'
+import { req } from './request'
 import { useQuery } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 
@@ -19,8 +19,7 @@ const booksQueryDocument = graphql(/* GraphQL */ `
 function useBooks() {
   return useQuery({
     queryKey: ['books'],
-    queryFn: async () =>
-      request('http://localhost:3000/api/graphql', booksQueryDocument),
+    queryFn: async () => req(booksQueryDocument),
   })
 }
 export { useBooks }

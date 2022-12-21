@@ -1,4 +1,4 @@
-import request from 'graphql-request'
+import { req } from './request'
 import { useMutation } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import type { MutationRegisterArgs, MutationLoginArgs } from 'generated/graphql'
@@ -37,7 +37,7 @@ function useAuth(document: RequestDocument) {
       email,
       password,
     }: MutationLoginArgs | MutationRegisterArgs) =>
-      request('http://localhost:3000/api/graphql', document, {
+      req(document, {
         email,
         password,
       }),
