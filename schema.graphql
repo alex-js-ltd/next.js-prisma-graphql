@@ -24,8 +24,5 @@ type User {
 
 type Mutation {
   register(email: String!, password: String!): User
-}
-
-type Mutation {
   login(email: String!, password: String!): User
 }
