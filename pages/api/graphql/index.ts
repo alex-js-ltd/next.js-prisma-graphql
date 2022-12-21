@@ -19,5 +19,7 @@ const server = new ApolloServer({
 })
 
 export default startServerAndCreateNextHandler(server, {
-  context: async (_req, res): Promise<Context> => ({ prisma, res }),
+  context: async (_req, res): Promise<Context> => {
+    return { prisma, res }
+  },
 })
