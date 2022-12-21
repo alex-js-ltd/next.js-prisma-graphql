@@ -3,7 +3,6 @@ import { useMutation } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import type { MutationRegisterArgs, MutationLoginArgs } from 'generated/graphql'
 import { useRouter } from 'next/router'
-import type { RequestDocument } from 'graphql-request'
 
 const registerMutationDocument = graphql(/* GraphQL */ `
   mutation register($email: String!, $password: String!) {
@@ -29,15 +28,12 @@ const loginMutationDocument = graphql(/* GraphQL */ `
   }
 `)
 
-function useAuth(document: RequestDocument) {
+function useRegister() {
   const router = useRouter()
 
   return useMutation({
-    mutationFn: ({
-      email,
-      password,
-    }: MutationRegisterArgs | MutationLoginArgs) =>
-      request('http://localhost:3000/api/graphql', document, {
+    mutationFn: ({ email, password }: MutationRegisterArgs) =>
+      request('http://localhost:3000/api/graphql', registerMutationDocument, {
         email,
         password,
       }),
@@ -49,4 +45,23 @@ function useAuth(document: RequestDocument) {
     },
   })
 }
-export { useAuth }
+
+function useLogin() {
+  const router = useRouter()
+
+  return useMutation({
+    mutationFn: ({ email, password }: MutationLoginArgs) =>
+      request('http://localhost:3000/api/graphql', loginMutationDocument, {
+        email,
+        password,
+      }),
+
+    onSuccess(data) {
+      console.log(data)
+
+      router.push('/books')
+    },
+  })
+}
+
+export { useRegister, useLogin }

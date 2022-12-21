@@ -3,12 +3,11 @@ import type { NextPage } from 'next'
 import React, { ReactElement, cloneElement, FormEvent } from 'react'
 import { Button, Input, FormGroup, Spinner, ErrorMessage } from 'comps/lib'
 import { Modal, ModalContents, ModalOpenButton } from 'comps/modal'
-import { useAuth } from 'lib/auth'
-import { RegisterDocument, LoginDocument } from 'generated/graphql'
+import { useRegister, useLogin } from 'lib/auth'
 
 const Home: NextPage = () => {
-  const register = useAuth(RegisterDocument)
-  const login = useAuth(LoginDocument)
+  const register = useRegister()
+  const login = useLogin()
 
   return (
     <div
