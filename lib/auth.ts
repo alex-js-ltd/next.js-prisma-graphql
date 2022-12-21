@@ -29,14 +29,13 @@ const loginMutationDocument = graphql(/* GraphQL */ `
   }
 `)
 
+type Props = MutationLoginArgs | MutationRegisterArgs
+
 function useAuth(document: RequestDocument) {
   const router = useRouter()
 
   return useMutation({
-    mutationFn: ({
-      email,
-      password,
-    }: MutationLoginArgs | MutationRegisterArgs) =>
+    mutationFn: ({ email, password }: Props) =>
       req(document, {
         email,
         password,
