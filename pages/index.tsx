@@ -3,10 +3,12 @@ import type { NextPage } from 'next'
 import React, { ReactElement, cloneElement, FormEvent } from 'react'
 import { Button, Input, FormGroup, Spinner, ErrorMessage } from 'comps/lib'
 import { Modal, ModalContents, ModalOpenButton } from 'comps/modal'
-import { useRegister } from 'lib/register'
+import { useAuth } from 'lib/auth'
+import { RegisterDocument, LoginDocument } from 'generated/graphql'
 
 const Home: NextPage = () => {
-  const register = useRegister()
+  const register = useAuth(RegisterDocument)
+  const login = useAuth(LoginDocument)
 
   return (
     <div
@@ -31,12 +33,10 @@ const Home: NextPage = () => {
             <Button variant="primary">Login</Button>
           </ModalOpenButton>
           <ModalContents aria-label="Login form" title="Login">
-            {/* <LoginForm
-              auth={signIn}
-              submitButton={<Button variant='primary'>Login</Button>}
-            /> */}
-
-            <>hello</>
+            <LoginForm
+              auth={login}
+              submitButton={<Button variant="primary">Login</Button>}
+            />
           </ModalContents>
         </Modal>
         <Modal>

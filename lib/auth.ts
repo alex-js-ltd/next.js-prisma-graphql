@@ -1,49 +1,52 @@
-import jwt from 'jsonwebtoken'
-import { prisma } from './prisma'
-import { isError } from './isError'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import type { User } from '@prisma/client'
+import request from 'graphql-request'
+import { useMutation } from '@tanstack/react-query'
+import { graphql } from 'generated/gql'
+import type { MutationRegisterArgs, MutationLoginArgs } from 'generated/graphql'
+import { useRouter } from 'next/router'
+import type { RequestDocument } from 'graphql-request'
 
-type Handler = (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  user: User,
-) => unknown | Promise<unknown>
-
-const validateRoute = (handler: Handler) => {
-  return async (req: NextApiRequest, res: NextApiResponse<Handler | Error>) => {
-    const token = req.cookies.TRAX_ACCESS_TOKEN
-
-    if (token) {
-      let user
-
-      try {
-        const { id }: any = jwt.verify(token, 'hello')
-
-        user = await prisma.user.findUnique({
-          where: { id },
-        })
-
-        if (!user) {
-          throw new Error('Not real user')
-        }
-      } catch (error) {
-        res.status(401)
-        res.json(isError(error))
-        return
-      }
-
-      return handler(req, res, user)
+const registerMutationDocument = graphql(/* GraphQL */ `
+  mutation register($email: String!, $password: String!) {
+    register(email: $email, password: $password) {
+      createdAt
+      email
+      id
+      password
+      updatedAt
     }
-
-    res.status(401)
-    res.json(new Error('Not Authorized'))
   }
-}
+`)
 
-const validateToken = (token: string) => {
-  const user = jwt.verify(token, 'hello')
-  return user
-}
+const loginMutationDocument = graphql(/* GraphQL */ `
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      createdAt
+      email
+      id
+      password
+      updatedAt
+    }
+  }
+`)
 
-export { validateRoute, validateToken }
+function useAuth(document: RequestDocument) {
+  const router = useRouter()
+
+  return useMutation({
+    mutationFn: ({
+      email,
+      password,
+    }: MutationRegisterArgs | MutationLoginArgs) =>
+      request('http://localhost:3000/api/graphql', document, {
+        email,
+        password,
+      }),
+
+    onSuccess(data) {
+      console.log(data)
+
+      router.push('/books')
+    },
+  })
+}
+export { useAuth }
