@@ -4,23 +4,23 @@ import { graphql } from 'generated/gql'
 import type { Book } from 'generated/graphql'
 
 const booksQueryDocument = graphql(/* GraphQL */ `
-  query getBooks {
-    books {
+  query books($query: String) {
+    books(query: $query) {
       id
-      title
       author
       coverImageUrl
+      pageCount
       publisher
       synopsis
-      pageCount
+      title
     }
   }
 `)
 
-function useBooks() {
+function useBooks(query: string) {
   const result = useQuery<{ books: Book[] }, Error>({
-    queryKey: ['books'],
-    queryFn: async () => req(booksQueryDocument),
+    queryKey: ['books', query],
+    queryFn: async () => req(booksQueryDocument, { query }),
   })
 
   console.log(result.data)

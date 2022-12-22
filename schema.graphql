@@ -11,7 +11,7 @@ type Book {
 }
 
 type Query {
-  books: [Book]
+  books(query: String): [Book]
 }
 
 type User {

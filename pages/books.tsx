@@ -13,7 +13,7 @@ import { BookRow } from 'comps/book-row'
 const Page: NextPageWithLayout = () => {
   const [query, setQuery] = useState<string>('')
   const [queried, setQueried] = useState<boolean>(false)
-  const { books, error, isLoading, isError, isSuccess } = useBooks()
+  const { books, error, isLoading, isError, isSuccess } = useBooks(query)
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
