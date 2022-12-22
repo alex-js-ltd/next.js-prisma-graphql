@@ -4,7 +4,6 @@ const Query: QueryResolvers = {
   async books(_parent, args, ctx) {
     const { query } = args
 
-    console.log('query', query)
     const books = await ctx.prisma.book.findMany({
       where: {
         title: {
@@ -13,7 +12,7 @@ const Query: QueryResolvers = {
         },
       },
     })
-    console.log(books)
+
     return books
   },
 }
