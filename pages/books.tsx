@@ -12,8 +12,8 @@ import { BookRow } from 'comps/book-row'
 
 const Page: NextPageWithLayout = () => {
   const [query, setQuery] = useState<string>('')
-  const [queried, setQueried] = useState<boolean>(false)
-  const { books, error, isLoading, isError, isSuccess } = useBooks(query)
+
+  const { books, error, isLoading, isError } = useBooks(query)
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -21,7 +21,7 @@ const Page: NextPageWithLayout = () => {
     const formElements = form.elements as typeof form.elements & {
       search: HTMLInputElement
     }
-    setQueried(true)
+
     setQuery(formElements.search.value)
   }
 
