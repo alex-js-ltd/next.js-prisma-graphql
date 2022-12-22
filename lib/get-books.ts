@@ -1,6 +1,7 @@
 import { req } from './request'
 import { useQuery } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
+import type { Book } from '@prisma/client'
 
 const booksQueryDocument = graphql(/* GraphQL */ `
   query getBooks {
@@ -17,7 +18,7 @@ const booksQueryDocument = graphql(/* GraphQL */ `
 `)
 
 function useBooks() {
-  return useQuery({
+  return useQuery<Book[], Error>({
     queryKey: ['books'],
     queryFn: async () => req(booksQueryDocument),
   })
