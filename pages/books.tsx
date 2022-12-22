@@ -24,7 +24,7 @@ const Page: NextPageWithLayout = () => {
     setQueried(true)
     setQuery(formElements.search.value)
   }
-  console.log(books)
+
   return (
     <div
       css={{ maxWidth: 800, margin: 'auto', width: '90vw', padding: '0px 0' }}
