@@ -1,15 +1,19 @@
 import type { ReactElement } from 'react'
 import type { NextPageWithLayout } from './_app'
 import type { FormEvent } from 'react'
+import type { Book } from '@prisma/client'
+import * as colors from 'styles/colors'
 import Layout from 'comps/layout'
 import { useState } from 'react'
-
+import { FaSearch, FaTimes } from 'react-icons/fa'
+import { Input, BookListUL, Spinner } from 'comps/lib'
 import { useBooks } from 'lib/get-books'
+import { BookRow } from 'comps/book-row'
 
 const Page: NextPageWithLayout = () => {
   const [query, setQuery] = useState<string>('')
   const [queried, setQueried] = useState<boolean>(false)
-  const { data: books, error, isLoading, isError, isSuccess } = useBooks()
+  const { books, error, isLoading, isError, isSuccess } = useBooks()
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -20,7 +24,7 @@ const Page: NextPageWithLayout = () => {
     setQueried(true)
     setQuery(formElements.search.value)
   }
-
+  console.log(books)
   return (
     <div
       css={{ maxWidth: 800, margin: 'auto', width: '90vw', padding: '0px 0' }}
@@ -61,9 +65,9 @@ const Page: NextPageWithLayout = () => {
       ) : null}
 
       <BookListUL css={{ marginTop: 20 }}>
-        {books.map((book: Book) => (
-          <li key={book.objectID} aria-label={book.title}>
-            <BookRow<Book> key={book.objectID} book={book} />
+        {books?.map((book: Book) => (
+          <li key={book.id} aria-label={book.title}>
+            <BookRow key={book.id} book={book} />
           </li>
         ))}
       </BookListUL>
