@@ -1,8 +1,8 @@
 import { req } from './request'
 import { useMutation } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
-import type { MutationRegisterArgs, MutationLoginArgs } from 'generated/graphql'
 import { useRouter } from 'next/router'
+import type { MutationRegisterArgs, MutationLoginArgs } from 'generated/graphql'
 import type { RequestDocument } from 'graphql-request'
 
 const registerMutationDocument = graphql(/* GraphQL */ `
@@ -53,9 +53,7 @@ function useAuth(document: RequestDocument) {
         password,
       }),
 
-    onSuccess(data) {
-      console.log(data)
-
+    onSuccess(_data) {
       router.push('/books')
     },
   })
@@ -67,8 +65,7 @@ function useLogout() {
   return useMutation({
     mutationFn: () => req(logoutMutationDocument),
 
-    onSuccess(data) {
-      console.log(data)
+    onSuccess(_data) {
       router.push('/')
     },
   })
