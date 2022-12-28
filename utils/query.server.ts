@@ -4,7 +4,7 @@ const Query: QueryResolvers = {
   async books(_parent, args, ctx) {
     const { query } = args
 
-    if (!ctx.req.session) return null
+    if (!ctx.req.session.user) return null
 
     const books = await ctx.prisma.book.findMany({
       where: {
