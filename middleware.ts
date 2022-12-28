@@ -1,21 +1,35 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { getIronSession } from 'iron-session/edge'
+import { sessionOptions } from 'utils/session.server'
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get('ACCESS_TOKEN')?.value
+export const middleware = async (req: NextRequest) => {
+  const res = NextResponse.next()
+  const session = await getIronSession(req, res, sessionOptions)
 
-  //redirect to login page
-  if (!token) {
-    return NextResponse.redirect(new URL('/', request.url))
+  // do anything with session here:
+  const { user } = session
+
+  // like mutate user:
+  // user.something = someOtherThing;
+  // or:
+  // session.user = someoneElse;
+
+  // uncomment next line to commit changes:
+  // await session.save();
+  // or maybe you want to destroy session:
+  // await session.destroy();
+
+  console.log('from middleware', { user })
+
+  // demo:
+  if (user?.email) {
+    return new NextResponse(null, { status: 403 }) // unauthorized to see pages inside admin/
   }
 
-  if (token) {
-    return NextResponse.next()
-  }
+  return res
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/books/:path*'],
+  matcher: '/books',
 }

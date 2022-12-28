@@ -4,14 +4,14 @@ import { prisma } from 'utils/prisma.server'
 import { PrismaClient } from '@prisma/client'
 import { readFileSync } from 'fs'
 import resolvers from 'utils/resolvers.server'
-import jwt from 'jsonwebtoken'
-import type { NextApiResponse } from 'next'
-import type { User } from '@prisma/client'
+import type { NextApiResponse, NextApiRequest } from 'next'
+import { withIronSessionApiRoute } from 'iron-session/next'
+import { sessionOptions } from 'utils/session.server'
 
 export type Context = {
   prisma: PrismaClient
   res: NextApiResponse
-  user?: User | null
+  req: NextApiRequest
 }
 
 const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' })
@@ -21,22 +21,10 @@ const server = new ApolloServer({
   resolvers,
 })
 
-export default startServerAndCreateNextHandler(server, {
+const handler = startServerAndCreateNextHandler(server, {
   context: async (req, res): Promise<Context> => {
-    const token = req.cookies.ACCESS_TOKEN || ''
-    const user = await getUser(token)
-    return { prisma, res, user }
+    return { prisma, res, req }
   },
 })
 
-async function getUser(token: string) {
-  let user
-  try {
-    const { id }: any = jwt.verify(token, 'hello')
-    user = await prisma.user.findUnique({
-      where: { id },
-    })
-  } catch (error) {}
-
-  return user ? user : null
-}
+export default withIronSessionApiRoute(handler, sessionOptions)

@@ -1,8 +1,6 @@
 import { MutationResolvers } from './types.generated.server'
 import { prisma } from 'utils/prisma.server'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import cookie from 'cookie'
 
 const Mutation: MutationResolvers = {
   async register(_parent, args, ctx) {
@@ -16,26 +14,8 @@ const Mutation: MutationResolvers = {
       },
     })
 
-    const token = jwt.sign(
-      {
-        email: user.email,
-        id: user.id,
-        time: Date.now(),
-      },
-      'hello',
-      { expiresIn: '8h' },
-    )
-
-    ctx.res.setHeader(
-      'Set-Cookie',
-      cookie.serialize('ACCESS_TOKEN', token, {
-        httpOnly: true,
-        maxAge: 8 * 60 * 60,
-        path: '/',
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
-      }),
-    )
+    ctx.req.session.user = user
+    await ctx.req.session.save()
 
     return user
   },
@@ -49,48 +29,16 @@ const Mutation: MutationResolvers = {
       },
     })
 
-    if (user && bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign(
-        {
-          id: user.id,
-          email: user.email,
-          time: Date.now(),
-        },
-        'hello',
-        {
-          expiresIn: '8h',
-        },
-      )
-
-      ctx.res.setHeader(
-        'Set-Cookie',
-        cookie.serialize('ACCESS_TOKEN', token, {
-          httpOnly: true,
-          maxAge: 8 * 60 * 60,
-          path: '/',
-          sameSite: 'lax',
-          secure: process.env.NODE_ENV === 'production',
-        }),
-      )
-
-      return user
+    if (user) {
+      ctx.req.session.user = user
+      await ctx.req.session.save()
     }
 
-    return null
+    return user
   },
 
   async logout(_parent, args, ctx) {
-    ctx.res.setHeader(
-      'Set-Cookie',
-      cookie.serialize('ACCESS_TOKEN', '', {
-        httpOnly: true,
-        maxAge: 0,
-        path: '/',
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
-        expires: new Date(Date.now()),
-      }),
-    )
+    ctx.req.session.destroy()
 
     return null
   },
