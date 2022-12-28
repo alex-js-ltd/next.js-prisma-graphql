@@ -29,7 +29,7 @@ const Mutation: MutationResolvers = {
       },
     })
 
-    if (user) {
+    if (user && bcrypt.compareSync(password, user.password)) {
       ctx.req.session.user = user
       await ctx.req.session.save()
     }
