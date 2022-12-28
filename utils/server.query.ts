@@ -17,6 +17,12 @@ const Query: QueryResolvers = {
 
     return books
   },
+
+  async user(_parent, _args, ctx) {
+    if (!ctx.user) return null
+
+    return ctx.user
+  },
 }
 
 export default Query

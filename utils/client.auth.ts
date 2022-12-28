@@ -1,8 +1,12 @@
 import { req } from './client.request'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import { useRouter } from 'next/router'
-import type { MutationRegisterArgs, MutationLoginArgs } from 'generated/graphql'
+import type {
+  MutationRegisterArgs,
+  MutationLoginArgs,
+  User,
+} from 'generated/graphql'
 import type { RequestDocument } from 'graphql-request'
 
 const registerMutationDocument = graphql(/* GraphQL */ `
@@ -41,11 +45,23 @@ const logoutMutationDocument = graphql(/* GraphQL */ `
   }
 `)
 
+const userQueryDocument = graphql(/* GraphQL */ `
+  query user {
+    user {
+      id
+      createdAt
+      updatedAt
+      email
+      password
+    }
+  }
+`)
+
 type Props = MutationLoginArgs | MutationRegisterArgs
 
 function useAuth(document: RequestDocument) {
   const router = useRouter()
-
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ email, password }: Props) =>
       req(document, {
@@ -53,8 +69,9 @@ function useAuth(document: RequestDocument) {
         password,
       }),
 
-    onSuccess(_data) {
+    onSuccess(data) {
       router.push('/books')
+      queryClient.setQueryData(['user'], () => data)
     },
   })
 }
@@ -71,4 +88,13 @@ function useLogout() {
   })
 }
 
-export { useAuth, useLogout }
+function useUser() {
+  const result = useQuery<{ user: User }, Error>({
+    queryKey: ['user'],
+    queryFn: async () => req(userQueryDocument),
+  })
+
+  return { ...result, user: result?.data?.user ?? null }
+}
+
+export { useAuth, useLogout, useUser }

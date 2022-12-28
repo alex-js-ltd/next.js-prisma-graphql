@@ -10,16 +10,17 @@ type Book {
   pageCount: Int!
 }
 
-type Query {
-  books(query: String): [Book]
-}
-
 type User {
   id: Int!
   createdAt: Date!
   updatedAt: Date!
   email: String!
   password: String!
+}
+
+type Query {
+  books(query: String): [Book]
+  user: User
 }
 
 type Mutation {

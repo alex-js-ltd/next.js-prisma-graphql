@@ -5,10 +5,12 @@ import { Button, StyledLink } from 'comps/lib'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 
-import { useLogout } from 'utils/client.auth'
+import { useLogout, useUser } from 'utils/client.auth'
+import { extendSchemaImpl } from 'graphql/utilities/extendSchema'
 
 const Layout = ({ children }: { children: ReactElement }) => {
   const logout = useLogout()
+  const { user } = useUser()
   return (
     <Fragment>
       <div
@@ -20,7 +22,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
           right: '10px',
         }}
       >
-        user
+        {user?.email}
         <Button
           variant="secondary"
           css={{ marginLeft: '10px' }}
