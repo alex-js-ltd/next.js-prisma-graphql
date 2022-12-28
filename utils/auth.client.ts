@@ -12,11 +12,8 @@ import type { RequestDocument } from 'graphql-request'
 const registerMutationDocument = graphql(/* GraphQL */ `
   mutation register($email: String!, $password: String!) {
     register(email: $email, password: $password) {
-      createdAt
-      email
       id
-      password
-      updatedAt
+      email
     }
   }
 `)
@@ -24,11 +21,8 @@ const registerMutationDocument = graphql(/* GraphQL */ `
 const loginMutationDocument = graphql(/* GraphQL */ `
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
-      createdAt
-      email
       id
-      password
-      updatedAt
+      email
     }
   }
 `)
@@ -37,10 +31,7 @@ const logoutMutationDocument = graphql(/* GraphQL */ `
   mutation logout {
     logout {
       id
-      createdAt
-      updatedAt
       email
-      password
     }
   }
 `)
@@ -49,10 +40,7 @@ const userQueryDocument = graphql(/* GraphQL */ `
   query user {
     user {
       id
-      createdAt
-      updatedAt
       email
-      password
     }
   }
 `)
