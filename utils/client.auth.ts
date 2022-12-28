@@ -84,18 +84,19 @@ function useLogout() {
 
     onSuccess(_data) {
       router.push('/')
-      queryClient.setQueryData(['user'], () => null)
+
+      queryClient.invalidateQueries(['user'])
     },
   })
 }
 
-function useUser() {
+function useEmail() {
   const result = useQuery<{ user: User }, Error>({
     queryKey: ['user'],
     queryFn: async () => req(userQueryDocument),
   })
 
-  return { ...result, user: result?.data?.user ?? null }
+  return result?.data?.user.email ?? null
 }
 
-export { useAuth, useLogout, useUser }
+export { useAuth, useLogout, useEmail }

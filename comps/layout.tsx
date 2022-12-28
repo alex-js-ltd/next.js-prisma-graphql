@@ -5,11 +5,11 @@ import { Button, StyledLink } from 'comps/lib'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 
-import { useLogout, useUser } from 'utils/client.auth'
+import { useLogout, useEmail } from 'utils/client.auth'
 
 const Layout = ({ children }: { children: ReactElement }) => {
   const logout = useLogout()
-  const { user } = useUser()
+  const email = useEmail()
   return (
     <Fragment>
       <div
@@ -21,7 +21,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
           right: '10px',
         }}
       >
-        {user?.email}
+        {email}
         <Button
           variant="secondary"
           css={{ marginLeft: '10px' }}
