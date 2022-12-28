@@ -6,7 +6,6 @@ import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 
 import { useLogout, useUser } from 'utils/client.auth'
-import { extendSchemaImpl } from 'graphql/utilities/extendSchema'
 
 const Layout = ({ children }: { children: ReactElement }) => {
   const logout = useLogout()
