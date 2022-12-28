@@ -1,4 +1,4 @@
-import { req } from './request'
+import { req } from './client.request'
 import { useMutation } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import { useRouter } from 'next/router'

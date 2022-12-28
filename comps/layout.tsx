@@ -5,7 +5,7 @@ import { Button, StyledLink } from 'comps/lib'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 
-import { useLogout } from 'lib/auth'
+import { useLogout } from 'utils/client.auth'
 
 const Layout = ({ children }: { children: ReactElement }) => {
   const logout = useLogout()

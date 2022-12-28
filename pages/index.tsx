@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import React, { ReactElement, cloneElement, FormEvent } from 'react'
 import { Button, Input, FormGroup, Spinner, ErrorMessage } from 'comps/lib'
 import { Modal, ModalContents, ModalOpenButton } from 'comps/modal'
-import { useAuth } from 'lib/auth'
+import { useAuth } from 'utils/client.auth'
 import { RegisterDocument, LoginDocument } from 'generated/graphql'
 
 const Home: NextPage = () => {

@@ -1,9 +1,9 @@
 import { ApolloServer } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import { prisma } from 'lib/prisma'
+import { prisma } from 'utils/server.prisma'
 import { PrismaClient } from '@prisma/client'
 import { readFileSync } from 'fs'
-import resolvers from './resolvers'
+import resolvers from 'utils/server.resolvers'
 import jwt from 'jsonwebtoken'
 import type { NextApiResponse } from 'next'
 import type { User } from '@prisma/client'
@@ -19,7 +19,6 @@ const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' })
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: true,
 })
 
 export default startServerAndCreateNextHandler(server, {
