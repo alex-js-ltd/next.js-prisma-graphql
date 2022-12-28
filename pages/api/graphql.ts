@@ -1,12 +1,12 @@
 import { ApolloServer } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { prisma } from 'utils/prisma.server'
-import { PrismaClient } from '@prisma/client'
 import { readFileSync } from 'fs'
 import resolvers from 'utils/resolvers.server'
-import type { NextApiResponse, NextApiRequest } from 'next'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from 'utils/session.server'
+import type { PrismaClient } from '@prisma/client'
+import type { NextApiResponse, NextApiRequest } from 'next'
 
 export type Context = {
   prisma: PrismaClient
