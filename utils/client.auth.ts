@@ -78,12 +78,13 @@ function useAuth(document: RequestDocument) {
 
 function useLogout() {
   const router = useRouter()
-
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: () => req(logoutMutationDocument),
 
     onSuccess(_data) {
       router.push('/')
+      queryClient.setQueryData(['user'], () => null)
     },
   })
 }
