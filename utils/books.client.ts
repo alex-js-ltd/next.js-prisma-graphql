@@ -17,12 +17,16 @@ const booksQueryDocument = graphql(/* GraphQL */ `
   }
 `)
 
-function useBooks(query: string) {
+function fetchBooks(query?: string | null) {
+  return req(booksQueryDocument, { query })
+}
+
+function useBooks(query: string | null) {
   const result = useQuery<{ books: Book[] }, Error>({
     queryKey: ['books', query],
-    queryFn: async () => req(booksQueryDocument, { query }),
+    queryFn: async () => fetchBooks(query),
   })
 
   return { ...result, books: result?.data?.books ?? [] }
 }
-export { useBooks }
+export { useBooks, fetchBooks }
