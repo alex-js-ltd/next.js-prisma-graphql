@@ -72,7 +72,6 @@ function useLogout() {
 
     onSuccess(_data) {
       router.push('/')
-
       queryClient.invalidateQueries(['user'])
     },
   })

@@ -23,13 +23,13 @@ export const middleware = async (req: NextRequest) => {
   console.log('from middleware', { user })
 
   // demo:
-  if (user?.email) {
-    return new NextResponse(null, { status: 403 }) // unauthorized to see pages inside admin/
+  if (!user?.email) {
+    return NextResponse.redirect(new URL('/', req.url))
   }
 
   return res
 }
 
 export const config = {
-  matcher: '/books',
+  matcher: '/books:path*',
 }
