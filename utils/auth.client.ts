@@ -1,4 +1,4 @@
-import { req } from './client.request'
+import { req } from './request.client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import { useRouter } from 'next/router'
@@ -96,7 +96,7 @@ function useEmail() {
     queryFn: async () => req(userQueryDocument),
   })
 
-  return result?.data?.user.email ?? null
+  return result?.data?.user?.email ?? null
 }
 
 export { useAuth, useLogout, useEmail }

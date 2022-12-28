@@ -7,7 +7,7 @@ import Layout from 'comps/layout'
 import { useState } from 'react'
 import { FaSearch, FaTimes } from 'react-icons/fa'
 import { Input, BookListUL, Spinner } from 'comps/lib'
-import { useBooks } from 'utils/client.books'
+import { useBooks } from 'utils/books.client'
 import { BookRow } from 'comps/book-row'
 
 const Page: NextPageWithLayout = () => {

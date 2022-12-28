@@ -1,4 +1,4 @@
-import { QueryResolvers } from './server.types.generated'
+import { QueryResolvers } from './types.generated.server'
 
 const Query: QueryResolvers = {
   async books(_parent, args, ctx) {

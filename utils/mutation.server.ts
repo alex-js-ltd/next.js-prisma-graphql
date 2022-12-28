@@ -1,5 +1,5 @@
-import { MutationResolvers } from './server.types.generated'
-import { prisma } from 'utils/server.prisma'
+import { MutationResolvers } from './types.generated.server'
+import { prisma } from 'utils/prisma.server'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import cookie from 'cookie'

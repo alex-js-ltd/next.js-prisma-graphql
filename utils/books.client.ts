@@ -1,4 +1,4 @@
-import { req } from './client.request'
+import { req } from './request.client'
 import { useQuery } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import type { Book } from 'generated/graphql'
