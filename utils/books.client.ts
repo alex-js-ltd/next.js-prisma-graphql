@@ -23,8 +23,6 @@ function useBooks(query: string) {
     queryFn: async () => req(booksQueryDocument, { query }),
   })
 
-  console.log(result.data)
-
   return { ...result, books: result?.data?.books ?? [] }
 }
 export { useBooks }
