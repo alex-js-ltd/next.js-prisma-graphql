@@ -11,11 +11,8 @@ type Book {
 }
 
 type User {
-  id: Int!
-  createdAt: Date!
-  updatedAt: Date!
-  email: String!
-  password: String!
+  id: Int
+  email: String
 }
 
 type Query {
