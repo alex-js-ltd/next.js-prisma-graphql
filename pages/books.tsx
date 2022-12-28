@@ -7,12 +7,11 @@ import Layout from 'comps/layout'
 import { useState } from 'react'
 import { FaSearch, FaTimes } from 'react-icons/fa'
 import { Input, BookListUL, Spinner } from 'comps/lib'
-import { useBooks, fetchBooks } from 'utils/books.client'
+import { useBooks } from 'utils/books.client'
 import { BookRow } from 'comps/book-row'
-import { QueryClient, dehydrate } from '@tanstack/react-query'
 
 const Page: NextPageWithLayout = () => {
-  const [query, setQuery] = useState<string | null>(null)
+  const [query, setQuery] = useState<string>('')
 
   const { books, error, isLoading, isError } = useBooks(query)
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -78,21 +77,6 @@ const Page: NextPageWithLayout = () => {
 
 Page.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
-}
-
-export async function getStaticProps() {
-  const queryClient = new QueryClient()
-
-  await queryClient.prefetchQuery({
-    queryKey: ['books'],
-    queryFn: () => fetchBooks(),
-  })
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  }
 }
 
 export default Page
