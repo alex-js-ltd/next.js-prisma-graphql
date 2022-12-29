@@ -48,12 +48,18 @@ const Mutation: MutationResolvers = {
 
   async createListItem(_parent, args, ctx) {
     const { listItemInput } = args
+    const { userId, ...rest } = listItemInput
 
-    const listItems = await useListItems(listItemInput.userId)
-    console.log('listItems', listItems)
-    if (listItems) return null
+    const user = await prisma.listItem.create({
+      data: {
+        ...rest,
+        User: {
+          connect: { id: userId },
+        },
+      },
+    })
 
-    return 'cool'
+    return 'list item created'
   },
 }
 
@@ -66,7 +72,7 @@ function userSession(user: User | null) {
   }
 }
 
-async function useListItems(id: number) {
+async function getUser(id: number) {
   const user = await prisma.user.findUnique({
     where: {
       id,
@@ -76,5 +82,5 @@ async function useListItems(id: number) {
     },
   })
 
-  return user?.listItems
+  return user
 }
