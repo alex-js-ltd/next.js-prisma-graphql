@@ -2,6 +2,7 @@ import { MutationResolvers } from './types.generated.server'
 import { prisma } from 'utils/prisma.server'
 import bcrypt from 'bcrypt'
 import { User } from '@prisma/client'
+import { GraphQLError } from 'graphql'
 
 const Mutation: MutationResolvers = {
   async register(_parent, args, ctx) {
@@ -46,14 +47,16 @@ const Mutation: MutationResolvers = {
   },
 
   async createListItem(_parent, args, ctx) {
-    const { listItem, id } = args
+    const { listItem, userId } = args
 
-    const listItems = await useListItems(id)
+    const listItems = await useListItems(userId)
 
-    if (!listItems) {
+    if (listItems) return null
+
+    try {
       const updateUser = await prisma.user.update({
         where: {
-          id,
+          id: userId,
         },
         data: {
           listItems: {
@@ -61,11 +64,14 @@ const Mutation: MutationResolvers = {
           },
         },
       })
-
       console.log('update user', updateUser)
+    } catch (error) {
+      console.log(error)
+
+      return 'whoops'
     }
 
-    return null
+    return 'cool'
   },
 }
 

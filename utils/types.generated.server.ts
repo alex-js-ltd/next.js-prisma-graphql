@@ -45,7 +45,6 @@ export type ListItemInput = {
   author: Scalars['String'];
   coverImageUrl: Scalars['String'];
   finishDate: Scalars['Date'];
-  id: Scalars['Int'];
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
   rating: Scalars['Int'];
@@ -56,7 +55,7 @@ export type ListItemInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createListItem?: Maybe<ListItem>;
+  createListItem?: Maybe<Scalars['String']>;
   login?: Maybe<User>;
   logout?: Maybe<User>;
   register?: Maybe<User>;
@@ -64,8 +63,8 @@ export type Mutation = {
 
 
 export type MutationCreateListItemArgs = {
-  id: Scalars['Int'];
   listItem: ListItemInput;
+  userId: Scalars['Int'];
 };
 
 
@@ -222,7 +221,7 @@ export type ListItemResolvers<ContextType = Context, ParentType extends Resolver
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createListItem?: Resolver<Maybe<ResolversTypes['ListItem']>, ParentType, ContextType, RequireFields<MutationCreateListItemArgs, 'id' | 'listItem'>>;
+  createListItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationCreateListItemArgs, 'listItem' | 'userId'>>;
   login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
   logout?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password'>>;

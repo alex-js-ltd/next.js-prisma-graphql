@@ -37,11 +37,10 @@ type Mutation {
   register(email: String!, password: String!): User
   login(email: String!, password: String!): User
   logout: User
-  createListItem(listItem: ListItemInput!, id: Int!): ListItem
+  createListItem(listItem: ListItemInput!, userId: Int!): String
 }
 
 input ListItemInput {
-  id: Int!
   title: String!
   author: String!
   coverImageUrl: String!
