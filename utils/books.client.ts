@@ -19,7 +19,7 @@ const booksQueryDocument = graphql(/* GraphQL */ `
 
 function useBooks(query: string) {
   const result = useQuery<{ books: Book[] }, Error>({
-    queryKey: ['books'],
+    queryKey: ['books', query],
     queryFn: async () => req(booksQueryDocument, { query }),
   })
 
