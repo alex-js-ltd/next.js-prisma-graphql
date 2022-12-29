@@ -47,6 +47,7 @@ const Mutation: MutationResolvers = {
   },
 
   async createListItem(_parent, args, ctx) {
+    if (!ctx.req.session.user) return null
     const { listItemInput } = args
     const { userId, ...rest } = listItemInput
 
