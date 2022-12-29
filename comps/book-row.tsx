@@ -99,7 +99,7 @@ const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
           height: '100%',
         }}
       >
-        {/* <StatusButtons book={book} /> */}
+        <StatusButtons book={book} />
       </div>
     </div>
   )

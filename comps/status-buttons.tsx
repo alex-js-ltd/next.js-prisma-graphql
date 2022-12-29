@@ -53,23 +53,26 @@ function TooltipButton({ label, highlight, onClick, icon, ...rest }: Props) {
 }
 
 function StatusButtons({ book }: { book: Book }) {
-  //const create = useCreateListItem()
+  const create = useCreateListItem()
 
   return (
     <Fragment>
-      {/* <TooltipButton
+      <TooltipButton
         label="Add to list"
         highlight={colors.indigo}
         onClick={() =>
           create.mutateAsync({
-            ...book,
-            startDate: Date.now(),
-            finishDate: null,
-            rating: 0,
+            listItem: {
+              ...book,
+              startDate: Date.now(),
+              finishDate: Date.now(),
+              rating: 0,
+            },
+            id: 2,
           })
         }
         icon={<FaPlusCircle />}
-      /> */}
+      />
     </Fragment>
   )
 }

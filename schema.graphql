@@ -26,24 +26,18 @@ type ListItem {
 type User {
   id: Int
   email: String
-  listItems: [ListItem]
-}
-
-type UserSession {
-  id: Int
-  email: String
 }
 
 type Query {
   books(query: String): [Book]
-  user: UserSession
+  user: User
 }
 
 type Mutation {
-  register(email: String!, password: String!): UserSession
-  login(email: String!, password: String!): UserSession
-  logout: UserSession
-  createListItem(listItem: ListItemInput!): ListItem
+  register(email: String!, password: String!): User
+  login(email: String!, password: String!): User
+  logout: User
+  createListItem(listItem: ListItemInput!, id: Int!): ListItem
 }
 
 input ListItemInput {

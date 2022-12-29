@@ -2,7 +2,6 @@ import { MutationResolvers } from './types.generated.server'
 import { prisma } from 'utils/prisma.server'
 import bcrypt from 'bcrypt'
 import { User } from '@prisma/client'
-import type { UserSession } from './types.generated.server'
 
 const Mutation: MutationResolvers = {
   async register(_parent, args, ctx) {
@@ -45,13 +44,49 @@ const Mutation: MutationResolvers = {
 
     return null
   },
+
+  async createListItem(_parent, args, ctx) {
+    const { listItem, id } = args
+
+    const listItems = await useListItems(id)
+
+    if (!listItems) {
+      const updateUser = await prisma.user.update({
+        where: {
+          id,
+        },
+        data: {
+          listItems: {
+            connect: [listItem],
+          },
+        },
+      })
+
+      console.log('update user', updateUser)
+    }
+
+    return null
+  },
 }
 
 export default Mutation
 
-function userSession(user: User | null): UserSession {
+function userSession(user: User | null) {
   return {
     id: user?.id,
     email: user?.email,
   }
+}
+
+async function useListItems(id: number) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      listItems: true,
+    },
+  })
+
+  return user?.listItems
 }
