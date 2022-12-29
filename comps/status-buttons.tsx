@@ -11,7 +11,7 @@ import { Tooltip } from '@reach/tooltip'
 import { useAsync } from 'utils/use-async.client'
 import * as colors from 'styles/colors'
 import { CircleButton, Spinner } from './lib'
-import { useCreateListItem } from 'utils/list-items.client'
+import { useCreateListItem, useListItem } from 'utils/list-items.client'
 import { useUser } from 'utils/auth.client'
 import type { Book } from 'generated/graphql'
 
@@ -55,22 +55,34 @@ function TooltipButton({ label, highlight, onClick, icon, ...rest }: Props) {
 
 function StatusButtons({ book }: { book: Book }) {
   const { __typename, id, ...rest } = book
-  const { id: userId } = useUser()
-
+  const user = useUser()
+  const listItem = useListItem(book)
   const create = useCreateListItem()
+
+  console.log('listItem', listItem)
+
   return (
     <Fragment>
-      <TooltipButton
-        label="Add to list"
-        highlight={colors.indigo}
-        onClick={() =>
-          create.mutateAsync({
-            ...rest,
-            userId,
-          })
-        }
-        icon={<FaPlusCircle />}
-      />
+      {listItem ? (
+        <TooltipButton
+          label="Remove from list"
+          highlight={colors.danger}
+          // onClick={() => remove.mutateAsync(listItem)}
+          icon={<FaMinusCircle />}
+        />
+      ) : (
+        <TooltipButton
+          label="Add to list"
+          highlight={colors.indigo}
+          onClick={() =>
+            create.mutateAsync({
+              ...rest,
+              userId: user?.id,
+            })
+          }
+          icon={<FaPlusCircle />}
+        />
+      )}
     </Fragment>
   )
 }
