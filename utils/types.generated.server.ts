@@ -50,7 +50,7 @@ export type ListItemInput = {
   rating?: InputMaybe<Scalars['Int']>;
   synopsis: Scalars['String'];
   title: Scalars['String'];
-  userId: Scalars['Int'];
+  userId?: InputMaybe<Scalars['Int']>;
 };
 
 export type Mutation = {

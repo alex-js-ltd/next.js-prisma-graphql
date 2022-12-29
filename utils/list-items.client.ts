@@ -11,8 +11,6 @@ const createDocument = graphql(/* GraphQL */ `
 `)
 
 function useCreateListItem() {
-  const queryClient = useQueryClient()
-
   return useMutation({
     mutationFn: (listItemInput: ListItemInput) =>
       req(createDocument, { listItemInput }),

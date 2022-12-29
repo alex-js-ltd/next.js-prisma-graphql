@@ -12,6 +12,7 @@ import { useAsync } from 'utils/use-async.client'
 import * as colors from 'styles/colors'
 import { CircleButton, Spinner } from './lib'
 import { useCreateListItem } from 'utils/list-items.client'
+import { useUser } from 'utils/auth.client'
 import type { Book } from 'generated/graphql'
 
 type Props = {
@@ -54,6 +55,7 @@ function TooltipButton({ label, highlight, onClick, icon, ...rest }: Props) {
 
 function StatusButtons({ book }: { book: Book }) {
   const { __typename, id, ...rest } = book
+  const { id: userId } = useUser()
 
   const create = useCreateListItem()
   return (
@@ -64,7 +66,7 @@ function StatusButtons({ book }: { book: Book }) {
         onClick={() =>
           create.mutateAsync({
             ...rest,
-            userId: 2,
+            userId,
           })
         }
         icon={<FaPlusCircle />}

@@ -77,13 +77,13 @@ function useLogout() {
   })
 }
 
-function useEmail() {
+function useUser() {
   const result = useQuery<{ user: User }, Error>({
     queryKey: ['user'],
     queryFn: async () => req(userQueryDocument),
   })
 
-  return result?.data?.user?.email ?? null
+  return result?.data?.user
 }
 
-export { useAuth, useLogout, useEmail }
+export { useAuth, useLogout, useUser }

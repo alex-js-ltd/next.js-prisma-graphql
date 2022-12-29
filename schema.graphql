@@ -41,7 +41,7 @@ type Mutation {
 }
 
 input ListItemInput {
-  userId: Int!
+  userId: Int
   title: String!
   author: String!
   coverImageUrl: String!

@@ -52,6 +52,8 @@ const Mutation: MutationResolvers = {
     const { listItemInput } = args
     const { userId, ...rest } = listItemInput
 
+    if (!userId) return null
+
     const user = await prisma.listItem.create({
       data: {
         ...rest,
