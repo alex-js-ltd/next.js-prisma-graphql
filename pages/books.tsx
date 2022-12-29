@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import type { NextPageWithLayout } from './_app'
 import type { FormEvent } from 'react'
-import type { Book } from '@prisma/client'
+import type { Book } from 'generated/graphql'
 import * as colors from 'styles/colors'
 import Layout from 'comps/layout'
 import { useState } from 'react'
@@ -9,6 +9,8 @@ import { FaSearch, FaTimes } from 'react-icons/fa'
 import { Input, BookListUL, Spinner } from 'comps/lib'
 import { useBooks } from 'utils/books.client'
 import { BookRow } from 'comps/book-row'
+import { prisma } from 'utils/prisma.server'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
 
 const Page: NextPageWithLayout = () => {
   const [query, setQuery] = useState<string>('')
@@ -77,6 +79,21 @@ const Page: NextPageWithLayout = () => {
 
 Page.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
+}
+
+export const getServerSideProps = async () => {
+  const queryClient = new QueryClient()
+
+  await queryClient.prefetchQuery({
+    queryKey: ['books', ''],
+    queryFn: async () => await prisma.book.findMany(),
+  })
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  }
 }
 
 export default Page
