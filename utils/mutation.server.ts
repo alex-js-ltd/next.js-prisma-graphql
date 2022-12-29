@@ -2,6 +2,7 @@ import { MutationResolvers } from './types.generated.server'
 import { prisma } from 'utils/prisma.server'
 import bcrypt from 'bcrypt'
 import { User } from '@prisma/client'
+import type { UserSession } from './types.generated.server'
 
 const Mutation: MutationResolvers = {
   async register(_parent, args, ctx) {
@@ -48,7 +49,7 @@ const Mutation: MutationResolvers = {
 
 export default Mutation
 
-function userSession(user: User | null) {
+function userSession(user: User | null): UserSession {
   return {
     id: user?.id,
     email: user?.email,
