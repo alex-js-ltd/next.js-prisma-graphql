@@ -23,6 +23,23 @@ const Query: QueryResolvers = {
 
     return user ? user : null
   },
+
+  async listItems(_parent, args, ctx) {
+    if (!ctx.req.session.user) return null
+
+    const { userId } = args
+
+    const user = await ctx.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      include: {
+        listItems: true,
+      },
+    })
+
+    return user?.listItems ? user.listItems : null
+  },
 }
 
 export default Query

@@ -19,8 +19,8 @@ type ListItem {
   synopsis: String!
   pageCount: Int!
   startDate: DateTime!
-  finishDate: DateTime!
-  rating: Int!
+  finishDate: DateTime
+  rating: Int
 }
 
 type User {
@@ -31,6 +31,7 @@ type User {
 type Query {
   books(query: String): [Book]
   user: User
+  listItems(userId: Int!): [ListItem]
 }
 
 type Mutation {

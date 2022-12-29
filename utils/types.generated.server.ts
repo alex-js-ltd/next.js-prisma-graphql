@@ -31,11 +31,11 @@ export type ListItem = {
   __typename?: 'ListItem';
   author: Scalars['String'];
   coverImageUrl: Scalars['String'];
-  finishDate: Scalars['DateTime'];
+  finishDate?: Maybe<Scalars['DateTime']>;
   id: Scalars['Int'];
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
-  rating: Scalars['Int'];
+  rating?: Maybe<Scalars['Int']>;
   startDate: Scalars['DateTime'];
   synopsis: Scalars['String'];
   title: Scalars['String'];
@@ -81,12 +81,18 @@ export type MutationRegisterArgs = {
 export type Query = {
   __typename?: 'Query';
   books?: Maybe<Array<Maybe<Book>>>;
+  listItems?: Maybe<Array<Maybe<ListItem>>>;
   user?: Maybe<User>;
 };
 
 
 export type QueryBooksArgs = {
   query?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryListItemsArgs = {
+  userId: Scalars['Int'];
 };
 
 export type User = {
@@ -208,11 +214,11 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 export type ListItemResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ListItem'] = ResolversParentTypes['ListItem']> = {
   author?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   coverImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  finishDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  finishDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   pageCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   publisher?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  rating?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   startDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   synopsis?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -228,6 +234,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType, Partial<QueryBooksArgs>>;
+  listItems?: Resolver<Maybe<Array<Maybe<ResolversTypes['ListItem']>>>, ParentType, ContextType, RequireFields<QueryListItemsArgs, 'userId'>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
