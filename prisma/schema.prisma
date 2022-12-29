@@ -31,16 +31,16 @@ model Book {
 }
 
 model ListItem {
-  id            Int      @id @default(autoincrement())
-  title         String   @unique
+  id            Int       @id @default(autoincrement())
+  title         String    @unique
   author        String
   coverImageUrl String
   publisher     String
   synopsis      String
   pageCount     Int
-  startDate     DateTime @default(now())
-  finishDate    DateTime @updatedAt
+  startDate     DateTime  @default(now())
+  finishDate    DateTime?
   rating        Int
-  User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
 }

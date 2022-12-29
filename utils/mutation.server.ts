@@ -48,6 +48,7 @@ const Mutation: MutationResolvers = {
 
   async createListItem(_parent, args, ctx) {
     if (!ctx.req.session.user) return null
+
     const { listItemInput } = args
     const { userId, ...rest } = listItemInput
 
@@ -71,17 +72,4 @@ function userSession(user: User | null) {
     id: user?.id,
     email: user?.email,
   }
-}
-
-async function getUser(id: number) {
-  const user = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      listItems: true,
-    },
-  })
-
-  return user
 }
