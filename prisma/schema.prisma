@@ -12,11 +12,12 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  password  String
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  email       String        @unique
+  password    String
+  readingList ReadingList[]
 }
 
 model Book {
@@ -27,4 +28,19 @@ model Book {
   publisher     String
   synopsis      String
   pageCount     Int
+}
+
+model ReadingList {
+  id            Int      @id @default(autoincrement())
+  title         String   @unique
+  author        String
+  coverImageUrl String
+  publisher     String
+  synopsis      String
+  pageCount     Int
+  startDate     DateTime
+  finishDate    DateTime
+  rating        Int
+  User          User?    @relation(fields: [userId], references: [id])
+  userId        Int?
 }
