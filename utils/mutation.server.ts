@@ -47,10 +47,22 @@ const Mutation: MutationResolvers = {
 
     return null
   },
+
+  async createListItem(_parent, args, ctx) {
+    const user = ctx.req.session.user
+
+    if (!user) return null
+
+    const { listItem } = args
+
+    //const find = ctx.req.session.user.find
+
+    return null
+  },
 }
 
 export default Mutation
 
 function getUser(user?: User | null) {
-  return { id: user?.id, email: user?.email }
+  return { id: user?.id, email: user?.email, listItems: user?.listItems }
 }

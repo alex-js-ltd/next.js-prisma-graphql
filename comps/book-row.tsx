@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
+import { StatusButtons } from './status-buttons'
 
 import type { Book } from 'generated/graphql'
 
@@ -97,7 +98,9 @@ const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
           justifyContent: 'space-around',
           height: '100%',
         }}
-      ></div>
+      >
+        {/* <StatusButtons book={book} /> */}
+      </div>
     </div>
   )
 }

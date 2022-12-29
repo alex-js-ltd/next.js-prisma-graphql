@@ -10,9 +10,23 @@ type Book {
   pageCount: Int!
 }
 
+type ListItem {
+  id: Int!
+  title: String!
+  author: String!
+  coverImageUrl: String!
+  publisher: String!
+  synopsis: String!
+  pageCount: Int!
+  startDate: Date!
+  finishDate: Date!
+  rating: Int!
+}
+
 type User {
   id: Int
   email: String
+  listItems: [ListItem]
 }
 
 type Query {
@@ -24,4 +38,18 @@ type Mutation {
   register(email: String!, password: String!): User
   login(email: String!, password: String!): User
   logout: User
+  createListItem(listItem: ListItemInput!): ListItem
+}
+
+input ListItemInput {
+  id: Int!
+  title: String!
+  author: String!
+  coverImageUrl: String!
+  publisher: String!
+  synopsis: String!
+  pageCount: Int!
+  startDate: Date!
+  finishDate: Date!
+  rating: Int!
 }
