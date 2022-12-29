@@ -65,6 +65,26 @@ const Mutation: MutationResolvers = {
 
     return 'list item created'
   },
+
+  async updateListItem(_parent, args, ctx) {
+    if (!ctx.req.session.user) return null
+
+    const { listItemInput } = args
+    const { userId, ...rest } = listItemInput
+
+    if (!userId) return null
+
+    const updateUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        name: 'Viola the Magnificent',
+      },
+    })
+
+    return 'list item created'
+  },
 }
 
 export default Mutation
