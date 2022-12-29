@@ -86,7 +86,11 @@ export const getServerSideProps = async () => {
 
   await queryClient.prefetchQuery({
     queryKey: ['books'],
-    queryFn: async () => await prisma.book.findMany(),
+    queryFn: async () =>
+      await prisma.book.findMany({
+        skip: 0,
+        take: 10,
+      }),
   })
 
   return {
