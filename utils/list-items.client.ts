@@ -15,7 +15,7 @@ function useCreateListItem() {
 
   return useMutation({
     mutationFn: (listItemInput: ListItemInput) =>
-      req(createDocument, listItemInput),
+      req(createDocument, { listItemInput }),
 
     onSuccess(data) {
       console.log(data)
