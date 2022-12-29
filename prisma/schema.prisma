@@ -40,7 +40,7 @@ model ListItem {
   pageCount     Int
   startDate     DateTime  @default(now())
   finishDate    DateTime?
-  rating        Int
+  rating        Int?
   User          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
 }

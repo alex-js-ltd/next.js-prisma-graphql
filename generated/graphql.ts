@@ -43,9 +43,10 @@ export type ListItem = {
 export type ListItemInput = {
   author: Scalars['String'];
   coverImageUrl: Scalars['String'];
+  finishDate?: InputMaybe<Scalars['DateTime']>;
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
-  rating: Scalars['Int'];
+  rating?: InputMaybe<Scalars['Int']>;
   synopsis: Scalars['String'];
   title: Scalars['String'];
   userId: Scalars['Int'];

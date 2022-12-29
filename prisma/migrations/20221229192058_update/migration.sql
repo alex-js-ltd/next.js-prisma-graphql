@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "ListItem" ALTER COLUMN "finishDate" DROP NOT NULL,
+ALTER COLUMN "rating" DROP NOT NULL;

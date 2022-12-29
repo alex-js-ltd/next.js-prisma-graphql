@@ -64,7 +64,6 @@ function StatusButtons({ book }: { book: Book }) {
         onClick={() =>
           create.mutateAsync({
             ...rest,
-            rating: 0,
             userId: 2,
           })
         }

@@ -48,5 +48,6 @@ input ListItemInput {
   publisher: String!
   synopsis: String!
   pageCount: Int!
-  rating: Int!
+  rating: Int
+  finishDate: DateTime
 }
