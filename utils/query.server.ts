@@ -21,6 +21,8 @@ const Query: QueryResolvers = {
 
   async user(_parent, _args, ctx) {
     const user = ctx.req.session.user
+
+    if (!user) return null
     return user ? user : null
   },
 }

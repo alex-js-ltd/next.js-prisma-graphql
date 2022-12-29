@@ -56,9 +56,9 @@ export type ListItemInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createListItem?: Maybe<ListItem>;
-  login?: Maybe<User>;
-  logout?: Maybe<User>;
-  register?: Maybe<User>;
+  login?: Maybe<UserSession>;
+  logout?: Maybe<UserSession>;
+  register?: Maybe<UserSession>;
 };
 
 
@@ -81,7 +81,7 @@ export type MutationRegisterArgs = {
 export type Query = {
   __typename?: 'Query';
   books?: Maybe<Array<Maybe<Book>>>;
-  user?: Maybe<User>;
+  user?: Maybe<UserSession>;
 };
 
 
@@ -96,13 +96,19 @@ export type User = {
   listItems?: Maybe<Array<Maybe<ListItem>>>;
 };
 
+export type UserSession = {
+  __typename?: 'UserSession';
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+};
+
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register?: { __typename?: 'User', id?: number | null, email?: string | null } | null };
+export type RegisterMutation = { __typename?: 'Mutation', register?: { __typename?: 'UserSession', id?: number | null, email?: string | null } | null };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -110,17 +116,17 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'User', id?: number | null, email?: string | null } | null };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'UserSession', id?: number | null, email?: string | null } | null };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'User', id?: number | null, email?: string | null } | null };
+export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'UserSession', id?: number | null, email?: string | null } | null };
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id?: number | null, email?: string | null } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'UserSession', id?: number | null, email?: string | null } | null };
 
 export type BooksQueryVariables = Exact<{
   query?: InputMaybe<Scalars['String']>;

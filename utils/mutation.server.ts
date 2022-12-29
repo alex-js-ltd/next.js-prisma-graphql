@@ -1,7 +1,7 @@
 import { MutationResolvers } from './types.generated.server'
 import { prisma } from 'utils/prisma.server'
 import bcrypt from 'bcrypt'
-import { User } from 'generated/graphql'
+import { User } from '@prisma/client'
 
 const Mutation: MutationResolvers = {
   async register(_parent, args, ctx) {
@@ -15,12 +15,10 @@ const Mutation: MutationResolvers = {
       },
     })
 
-    const u = getUser(user)
-
-    ctx.req.session.user = u
+    ctx.req.session.user = userSession(user)
     await ctx.req.session.save()
 
-    return u
+    return ctx.req.session.user
   },
 
   async login(_parent, args, ctx) {
@@ -32,30 +30,17 @@ const Mutation: MutationResolvers = {
       },
     })
 
-    const u = getUser(user)
-
-    if (user && bcrypt.compareSync(password, user.password)) {
-      ctx.req.session.user = u
+    if (user && bcrypt.compareSync(password, user?.password)) {
+      ctx.req.session.user = userSession(user)
       await ctx.req.session.save()
+      return ctx.req.session.user
     }
-
-    return u
-  },
-
-  async logout(_parent, args, ctx) {
-    ctx.req.session.destroy()
 
     return null
   },
 
-  async createListItem(_parent, args, ctx) {
-    const user = ctx.req.session.user
-
-    if (!user) return null
-
-    const { listItem } = args
-
-    //const find = ctx.req.session.user.find
+  async logout(_parent, _args, ctx) {
+    ctx.req.session.destroy()
 
     return null
   },
@@ -63,6 +48,9 @@ const Mutation: MutationResolvers = {
 
 export default Mutation
 
-function getUser(user?: User | null) {
-  return { id: user?.id, email: user?.email, listItems: user?.listItems }
+function userSession(user: User | null) {
+  return {
+    id: user?.id,
+    email: user?.email,
+  }
 }
