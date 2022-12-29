@@ -1,4 +1,4 @@
-scalar Date
+scalar DateTime
 
 type Book {
   id: Int!
@@ -18,8 +18,8 @@ type ListItem {
   publisher: String!
   synopsis: String!
   pageCount: Int!
-  startDate: Date!
-  finishDate: Date!
+  startDate: DateTime!
+  finishDate: DateTime!
   rating: Int!
 }
 
@@ -37,17 +37,16 @@ type Mutation {
   register(email: String!, password: String!): User
   login(email: String!, password: String!): User
   logout: User
-  createListItem(listItem: ListItemInput!, userId: Int!): String
+  createListItem(listItemInput: ListItemInput!): String
 }
 
 input ListItemInput {
+  userId: Int!
   title: String!
   author: String!
   coverImageUrl: String!
   publisher: String!
   synopsis: String!
   pageCount: Int!
-  startDate: Date!
-  finishDate: Date!
   rating: Int!
 }

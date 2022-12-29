@@ -47,29 +47,11 @@ const Mutation: MutationResolvers = {
   },
 
   async createListItem(_parent, args, ctx) {
-    const { listItem, userId } = args
+    const { listItemInput } = args
 
-    const listItems = await useListItems(userId)
-
+    const listItems = await useListItems(listItemInput.userId)
+    console.log('listItems', listItems)
     if (listItems) return null
-
-    try {
-      const updateUser = await prisma.user.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          listItems: {
-            connect: [listItem],
-          },
-        },
-      })
-      console.log('update user', updateUser)
-    } catch (error) {
-      console.log(error)
-
-      return 'whoops'
-    }
 
     return 'cool'
   },

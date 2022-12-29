@@ -13,7 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Date: any;
+  DateTime: any;
 };
 
 export type Book = {
@@ -31,12 +31,12 @@ export type ListItem = {
   __typename?: 'ListItem';
   author: Scalars['String'];
   coverImageUrl: Scalars['String'];
-  finishDate: Scalars['Date'];
+  finishDate: Scalars['DateTime'];
   id: Scalars['Int'];
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
   rating: Scalars['Int'];
-  startDate: Scalars['Date'];
+  startDate: Scalars['DateTime'];
   synopsis: Scalars['String'];
   title: Scalars['String'];
 };
@@ -44,13 +44,12 @@ export type ListItem = {
 export type ListItemInput = {
   author: Scalars['String'];
   coverImageUrl: Scalars['String'];
-  finishDate: Scalars['Date'];
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
   rating: Scalars['Int'];
-  startDate: Scalars['Date'];
   synopsis: Scalars['String'];
   title: Scalars['String'];
+  userId: Scalars['Int'];
 };
 
 export type Mutation = {
@@ -63,8 +62,7 @@ export type Mutation = {
 
 
 export type MutationCreateListItemArgs = {
-  listItem: ListItemInput;
-  userId: Scalars['Int'];
+  listItemInput: ListItemInput;
 };
 
 
@@ -167,7 +165,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Book: ResolverTypeWrapper<Book>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Date: ResolverTypeWrapper<Scalars['Date']>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   ListItem: ResolverTypeWrapper<ListItem>;
   ListItemInput: ListItemInput;
@@ -181,7 +179,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Book: Book;
   Boolean: Scalars['Boolean'];
-  Date: Scalars['Date'];
+  DateTime: Scalars['DateTime'];
   Int: Scalars['Int'];
   ListItem: ListItem;
   ListItemInput: ListItemInput;
@@ -202,26 +200,26 @@ export type BookResolvers<ContextType = Context, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
-  name: 'Date';
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
 }
 
 export type ListItemResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ListItem'] = ResolversParentTypes['ListItem']> = {
   author?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   coverImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  finishDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  finishDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   pageCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   publisher?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  startDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  startDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   synopsis?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createListItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationCreateListItemArgs, 'listItem' | 'userId'>>;
+  createListItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationCreateListItemArgs, 'listItemInput'>>;
   login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
   logout?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password'>>;
@@ -240,7 +238,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 
 export type Resolvers<ContextType = Context> = {
   Book?: BookResolvers<ContextType>;
-  Date?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
   ListItem?: ListItemResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

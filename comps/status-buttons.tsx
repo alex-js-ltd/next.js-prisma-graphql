@@ -53,30 +53,7 @@ function TooltipButton({ label, highlight, onClick, icon, ...rest }: Props) {
 }
 
 function StatusButtons({ book }: { book: Book }) {
-  const create = useCreateListItem()
-
-  const { id, __typename, ...rest } = book
-
-  return (
-    <Fragment>
-      <TooltipButton
-        label="Add to list"
-        highlight={colors.indigo}
-        onClick={() =>
-          create.mutateAsync({
-            listItemInput: {
-              ...rest,
-              startDate: new Date(Date.now()),
-              finishDate: new Date(Date.now()),
-              rating: 0,
-            },
-            userId: 2,
-          })
-        }
-        icon={<FaPlusCircle />}
-      />
-    </Fragment>
-  )
+  return <Fragment></Fragment>
 }
 
 export { StatusButtons }

@@ -38,8 +38,8 @@ model ListItem {
   publisher     String
   synopsis      String
   pageCount     Int
-  startDate     DateTime
-  finishDate    DateTime
+  startDate     DateTime @default(now())
+  finishDate    DateTime @updatedAt
   rating        Int
   User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int

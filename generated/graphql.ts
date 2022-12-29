@@ -12,7 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Date: any;
+  DateTime: any;
 };
 
 export type Book = {
@@ -30,12 +30,12 @@ export type ListItem = {
   __typename?: 'ListItem';
   author: Scalars['String'];
   coverImageUrl: Scalars['String'];
-  finishDate: Scalars['Date'];
+  finishDate: Scalars['DateTime'];
   id: Scalars['Int'];
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
   rating: Scalars['Int'];
-  startDate: Scalars['Date'];
+  startDate: Scalars['DateTime'];
   synopsis: Scalars['String'];
   title: Scalars['String'];
 };
@@ -43,13 +43,12 @@ export type ListItem = {
 export type ListItemInput = {
   author: Scalars['String'];
   coverImageUrl: Scalars['String'];
-  finishDate: Scalars['Date'];
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
   rating: Scalars['Int'];
-  startDate: Scalars['Date'];
   synopsis: Scalars['String'];
   title: Scalars['String'];
+  userId: Scalars['Int'];
 };
 
 export type Mutation = {
@@ -62,8 +61,7 @@ export type Mutation = {
 
 
 export type MutationCreateListItemArgs = {
-  listItem: ListItemInput;
-  userId: Scalars['Int'];
+  listItemInput: ListItemInput;
 };
 
 
@@ -129,8 +127,7 @@ export type BooksQueryVariables = Exact<{
 export type BooksQuery = { __typename?: 'Query', books?: Array<{ __typename?: 'Book', id: number, author: string, coverImageUrl: string, pageCount: number, publisher: string, synopsis: string, title: string } | null> | null };
 
 export type CreateListItemMutationVariables = Exact<{
-  listItem: ListItemInput;
-  userId: Scalars['Int'];
+  listItemInput: ListItemInput;
 }>;
 
 
@@ -142,4 +139,4 @@ export const LoginDocument = {"kind":"Document","definitions":[{"kind":"Operatio
 export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
 export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
 export const BooksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"books"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"books"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"author"}},{"kind":"Field","name":{"kind":"Name","value":"coverImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"pageCount"}},{"kind":"Field","name":{"kind":"Name","value":"publisher"}},{"kind":"Field","name":{"kind":"Name","value":"synopsis"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<BooksQuery, BooksQueryVariables>;
-export const CreateListItemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createListItem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"listItem"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ListItemInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createListItem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"listItem"},"value":{"kind":"Variable","name":{"kind":"Name","value":"listItem"}}},{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}]}}]} as unknown as DocumentNode<CreateListItemMutation, CreateListItemMutationVariables>;
+export const CreateListItemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createListItem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"listItemInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ListItemInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createListItem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"listItemInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"listItemInput"}}}]}]}}]} as unknown as DocumentNode<CreateListItemMutation, CreateListItemMutationVariables>;

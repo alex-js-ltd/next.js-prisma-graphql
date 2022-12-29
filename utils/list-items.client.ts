@@ -5,19 +5,17 @@ import { graphql } from 'generated/gql'
 import type { ListItemInput } from 'generated/graphql'
 
 const createDocument = graphql(/* GraphQL */ `
-  mutation createListItem($listItem: ListItemInput!, $userId: Int!) {
-    createListItem(listItem: $listItem, userId: $userId)
+  mutation createListItem($listItemInput: ListItemInput!) {
+    createListItem(listItemInput: $listItemInput)
   }
 `)
-
-type Props = { listItemInput: ListItemInput; userId: number }
 
 function useCreateListItem() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ listItemInput, userId }: Props) =>
-      req(createDocument, { listItemInput, userId }),
+    mutationFn: (listItemInput: ListItemInput) =>
+      req(createDocument, listItemInput),
 
     onSuccess(data) {
       console.log(data)
