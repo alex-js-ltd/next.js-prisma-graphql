@@ -1,4 +1,6 @@
+import type { ReactElement } from 'react'
 import { StyledLink } from 'comps/lib'
+import Layout from 'comps/layout'
 import { ListItemList } from 'comps/list-item-list'
 import { useListItems } from 'utils/list-items.client'
 
@@ -20,5 +22,9 @@ const ReadingList = () => {
       }
     />
   )
+}
+
+ReadingList.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>
 }
 export default ReadingList
