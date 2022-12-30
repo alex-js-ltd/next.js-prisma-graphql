@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { req } from './request.client'
 import { graphql } from 'generated/gql'
 import type { CreateListItemInput, Book, ListItem } from 'generated/graphql'
+import { formatDate } from './format-date.client'
 
 const createDocument = graphql(/* GraphQL */ `
   mutation createListItem($listItemInput: CreateListItemInput!) {
@@ -40,6 +41,13 @@ function useRemoveListItem(listItem: ListItem | null) {
       queryClient.invalidateQueries(['list-items'])
     },
   })
+}
+
+function useUpdateListItem() {
+  const date = new Date(Date.now()).toISOString()
+  console.log(date)
+
+  return {}
 }
 
 const listItemsDocument = graphql(/* GraphQL */ `
@@ -81,7 +89,13 @@ function useListItem(element: any) {
   return listItems?.find((li: ListItem) => li.bookId === element.id) ?? null
 }
 
-export { useCreateListItem, useListItems, useListItem, useRemoveListItem }
+export {
+  useCreateListItem,
+  useListItems,
+  useListItem,
+  useRemoveListItem,
+  useUpdateListItem,
+}
 
 function isListItem(valueToTest: any) {
   return (
