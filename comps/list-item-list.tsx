@@ -1,13 +1,14 @@
 import { ReactNode } from 'react'
 import { BookListUL } from './lib'
 import { BookRow } from './book-row'
+import type { ListItem } from '@prisma/client'
 
 function ListItemList({
   noListItems,
   list,
 }: {
   noListItems: ReactNode
-  list: any[]
+  list: ListItem[]
 }) {
   if (!list?.length) {
     return (
@@ -17,9 +18,9 @@ function ListItemList({
 
   return (
     <BookListUL>
-      {list?.map((listItem: any) => (
+      {list?.map(listItem => (
         <li key={listItem.id}>
-          <BookRow book={listItem} />
+          <BookRow<ListItem> book={listItem} />
         </li>
       ))}
     </BookListUL>

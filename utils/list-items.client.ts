@@ -34,8 +34,6 @@ function useCreateListItem(book: Book) {
 function useRemoveListItem(listItem: ListItem | null) {
   const queryClient = useQueryClient()
 
-  console.log('listItem', listItem)
-
   return useMutation({
     mutationFn: () => req(removeDocument, { removeListItemId: listItem?.id }),
 
