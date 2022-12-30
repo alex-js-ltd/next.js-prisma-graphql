@@ -59,6 +59,7 @@ export type Mutation = {
   login?: Maybe<User>;
   logout?: Maybe<User>;
   register?: Maybe<User>;
+  removeListItem?: Maybe<Scalars['String']>;
 };
 
 
@@ -76,6 +77,11 @@ export type MutationLoginArgs = {
 export type MutationRegisterArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationRemoveListItemArgs = {
+  id: Scalars['Int'];
 };
 
 export type Query = {
@@ -226,6 +232,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
   logout?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password'>>;
+  removeListItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationRemoveListItemArgs, 'id'>>;
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {

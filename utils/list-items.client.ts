@@ -10,6 +10,12 @@ const createDocument = graphql(/* GraphQL */ `
   }
 `)
 
+const removeDocument = graphql(/* GraphQL */ `
+  mutation removeListItem($removeListItemId: Int!) {
+    removeListItem(id: $removeListItemId)
+  }
+`)
+
 function useCreateListItem(book: Book) {
   const queryClient = useQueryClient()
 
@@ -18,6 +24,20 @@ function useCreateListItem(book: Book) {
   const listItemInput: CreateListItemInput = { bookId: id, ...rest }
   return useMutation({
     mutationFn: () => req(createDocument, { listItemInput }),
+
+    onSuccess() {
+      queryClient.invalidateQueries(['list-items'])
+    },
+  })
+}
+
+function useRemoveListItem(listItem: ListItem | null) {
+  const queryClient = useQueryClient()
+
+  console.log('listItem', listItem)
+
+  return useMutation({
+    mutationFn: () => req(removeDocument, { removeListItemId: listItem?.id }),
 
     onSuccess() {
       queryClient.invalidateQueries(['list-items'])
@@ -58,4 +78,4 @@ function useListItem(book: Book) {
   return listItems?.find((li: ListItem) => li.bookId === book.id) ?? null
 }
 
-export { useCreateListItem, useListItems, useListItem }
+export { useCreateListItem, useListItems, useListItem, useRemoveListItem }

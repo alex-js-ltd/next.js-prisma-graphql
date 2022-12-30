@@ -40,6 +40,7 @@ type Mutation {
   login(email: String!, password: String!): User
   logout: User
   createListItem(listItemInput: CreateListItemInput!): String
+  removeListItem(id: Int!): String
 }
 
 input CreateListItemInput {

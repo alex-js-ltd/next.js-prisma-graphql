@@ -66,6 +66,20 @@ const Mutation: MutationResolvers = {
 
     return 'list item created'
   },
+
+  async removeListItem(_parent, args, ctx) {
+    if (!ctx.req.session.user?.id) return null
+
+    const { id } = args
+
+    const remove = await prisma.listItem.delete({
+      where: {
+        id,
+      },
+    })
+
+    return 'list item removed'
+  },
 }
 
 export default Mutation
