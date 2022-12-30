@@ -70,10 +70,25 @@ function useListItems() {
   return result?.data?.listItems ?? []
 }
 
-function useListItem(book: Book) {
+function useListItem(element: any) {
   const listItems = useListItems()
 
-  return listItems?.find((li: ListItem) => li.bookId === book.id) ?? null
+  if (isListItem(element)) {
+    return (
+      listItems?.find((li: ListItem) => li.bookId === element.bookId) ?? null
+    )
+  }
+
+  return listItems?.find((li: ListItem) => li.bookId === element.id) ?? null
 }
 
 export { useCreateListItem, useListItems, useListItem, useRemoveListItem }
+
+function isListItem(valueToTest: any) {
+  return (
+    valueToTest &&
+    typeof valueToTest === 'object' &&
+    'bookId' in valueToTest &&
+    typeof valueToTest['bookId'] === 'number'
+  )
+}
