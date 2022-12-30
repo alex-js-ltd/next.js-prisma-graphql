@@ -56,7 +56,11 @@ function TooltipButton({ label, highlight, onClick, icon, ...rest }: Props) {
   )
 }
 
-function StatusButtons({ book }: { book: Book }) {
+type StatusProps<T> = {
+  book: T
+}
+
+const StatusButtons = <T extends Book>({ book }: StatusProps<T>) => {
   const listItem = useListItem(book)
   const create = useCreateListItem(book)
   const remove = useRemoveListItem(listItem)
