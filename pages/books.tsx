@@ -28,51 +28,51 @@ const Page: NextPageWithLayout = () => {
   }
 
   return (
-    <div
-      css={{ maxWidth: 800, margin: 'auto', width: '90vw', padding: '0px 0' }}
-    >
-      <form onSubmit={handleSearchSubmit}>
-        <Input
-          placeholder="Search books..."
-          id="search"
-          css={{ width: '100%' }}
-        />
+    <div>
+      <div>
+        <form onSubmit={handleSearchSubmit}>
+          <Input
+            placeholder="Search books..."
+            id="search"
+            css={{ width: '100%' }}
+          />
 
-        <label htmlFor="search">
-          <button
-            type="submit"
-            css={{
-              border: '0',
-              position: 'relative',
-              marginLeft: '-35px',
-              background: 'transparent',
-            }}
-          >
-            {isLoading ? (
-              <Spinner />
-            ) : isError ? (
-              <FaTimes aria-label="error" css={{ color: colors.danger }} />
-            ) : (
-              <FaSearch aria-label="search" />
-            )}
-          </button>
-        </label>
-      </form>
+          <label htmlFor="search">
+            <button
+              type="submit"
+              css={{
+                border: '0',
+                position: 'relative',
+                marginLeft: '-35px',
+                background: 'transparent',
+              }}
+            >
+              {isLoading ? (
+                <Spinner />
+              ) : isError ? (
+                <FaTimes aria-label="error" css={{ color: colors.danger }} />
+              ) : (
+                <FaSearch aria-label="search" />
+              )}
+            </button>
+          </label>
+        </form>
 
-      {isError ? (
-        <div css={{ color: colors.danger }}>
-          <p>There was an error:</p>
-          <pre>{error.message}</pre>
-        </div>
-      ) : null}
+        {isError ? (
+          <div css={{ color: colors.danger }}>
+            <p>There was an error:</p>
+            <pre>{error.message}</pre>
+          </div>
+        ) : null}
 
-      <BookListUL css={{ marginTop: 20 }}>
-        {books?.map((book: Book) => (
-          <li key={book.id} aria-label={book.title}>
-            <BookRow key={book.id} book={book} />
-          </li>
-        ))}
-      </BookListUL>
+        <BookListUL css={{ marginTop: 20 }}>
+          {books?.map((book: Book) => (
+            <li key={book.id} aria-label={book.title}>
+              <BookRow key={book.id} book={book} />
+            </li>
+          ))}
+        </BookListUL>
+      </div>
     </div>
   )
 }
