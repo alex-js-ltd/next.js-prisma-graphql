@@ -90,11 +90,6 @@ export type QueryBooksArgs = {
   query?: InputMaybe<Scalars['String']>;
 };
 
-
-export type QueryListItemsArgs = {
-  userId: Scalars['Int'];
-};
-
 export type User = {
   __typename?: 'User';
   email?: Maybe<Scalars['String']>;
@@ -234,7 +229,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType, Partial<QueryBooksArgs>>;
-  listItems?: Resolver<Maybe<Array<Maybe<ResolversTypes['ListItem']>>>, ParentType, ContextType, RequireFields<QueryListItemsArgs, 'userId'>>;
+  listItems?: Resolver<Maybe<Array<Maybe<ResolversTypes['ListItem']>>>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
 };
 

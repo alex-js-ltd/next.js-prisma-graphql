@@ -19,7 +19,7 @@ const documents = {
     "\n  query user {\n    user {\n      id\n      email\n    }\n  }\n": types.UserDocument,
     "\n  query books($query: String) {\n    books(query: $query) {\n      id\n      author\n      coverImageUrl\n      pageCount\n      publisher\n      synopsis\n      title\n    }\n  }\n": types.BooksDocument,
     "\n  mutation createListItem($listItemInput: ListItemInput!) {\n    createListItem(listItemInput: $listItemInput)\n  }\n": types.CreateListItemDocument,
-    "\n  query listItems($userId: Int!) {\n    listItems(userId: $userId) {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n      startDate\n      finishDate\n      rating\n    }\n  }\n": types.ListItemsDocument,
+    "\n  query listItems {\n    listItems {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n      startDate\n      finishDate\n      rating\n    }\n  }\n": types.ListItemsDocument,
 };
 
 /**
@@ -49,7 +49,7 @@ export function graphql(source: "\n  mutation createListItem($listItemInput: Lis
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query listItems($userId: Int!) {\n    listItems(userId: $userId) {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n      startDate\n      finishDate\n      rating\n    }\n  }\n"): (typeof documents)["\n  query listItems($userId: Int!) {\n    listItems(userId: $userId) {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n      startDate\n      finishDate\n      rating\n    }\n  }\n"];
+export function graphql(source: "\n  query listItems {\n    listItems {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n      startDate\n      finishDate\n      rating\n    }\n  }\n"): (typeof documents)["\n  query listItems {\n    listItems {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n      startDate\n      finishDate\n      rating\n    }\n  }\n"];
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

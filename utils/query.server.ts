@@ -25,18 +25,18 @@ const Query: QueryResolvers = {
   },
 
   async listItems(_parent, args, ctx) {
-    if (!ctx.req.session.user) return null
-
-    const { userId } = args
+    if (!ctx.req.session.user?.id) return null
 
     const user = await ctx.prisma.user.findUnique({
       where: {
-        id: userId,
+        id: ctx.req.session.user.id,
       },
       include: {
         listItems: true,
       },
     })
+
+    console.log('user list items', user)
 
     return user?.listItems ? user.listItems : null
   },

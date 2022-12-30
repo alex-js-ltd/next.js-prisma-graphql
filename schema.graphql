@@ -31,7 +31,7 @@ type User {
 type Query {
   books(query: String): [Book]
   user: User
-  listItems(userId: Int!): [ListItem]
+  listItems: [ListItem]
 }
 
 type Mutation {

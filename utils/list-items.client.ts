@@ -15,11 +15,15 @@ const createDocument = graphql(/* GraphQL */ `
   }
 `)
 
-function useCreateListItem() {
+function useCreateListItem(book: Book) {
   const queryClient = useQueryClient()
+
+  const { id, ...rest } = book
+  const user = useUser()
+
+  const listItemInput = { userId: user?.id, ...rest }
   return useMutation({
-    mutationFn: (listItemInput: ListItemInput) =>
-      req(createDocument, { listItemInput }),
+    mutationFn: () => req(createDocument, { listItemInput }),
 
     onSuccess() {
       queryClient.invalidateQueries(['list-items'])
@@ -28,8 +32,8 @@ function useCreateListItem() {
 }
 
 const listItemsDocument = graphql(/* GraphQL */ `
-  query listItems($userId: Int!) {
-    listItems(userId: $userId) {
+  query listItems {
+    listItems {
       id
       title
       author
@@ -45,19 +49,18 @@ const listItemsDocument = graphql(/* GraphQL */ `
 `)
 
 function useListItems() {
-  const user = useUser()
   const result = useQuery<{ listItems: ListItem[] }, Error>({
     queryKey: ['list-items'],
-    queryFn: async () => req(listItemsDocument, { userId: user?.id }),
+    queryFn: async () => req(listItemsDocument),
   })
-
-  return result?.data?.listItems
+  console.log('listItems', result?.data)
+  return result?.data?.listItems ?? []
 }
 
 function useListItem(book: Book) {
   const listItems = useListItems()
 
-  return listItems?.find((li: ListItem) => li.id === book.id) ?? null
+  return listItems?.find((li: ListItem) => li.title === book.title) ?? null
 }
 
 export { useCreateListItem, useListItems, useListItem }

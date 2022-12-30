@@ -54,32 +54,19 @@ function TooltipButton({ label, highlight, onClick, icon, ...rest }: Props) {
 }
 
 function StatusButtons({ book }: { book: Book }) {
-  const { __typename, id, ...rest } = book
-  const user = useUser()
   const listItem = useListItem(book)
-  const create = useCreateListItem()
+  const create = useCreateListItem(book)
 
   console.log('listItem', listItem)
+  console.log('book', book)
 
   return (
     <Fragment>
-      {listItem ? (
-        <TooltipButton
-          label="Remove from list"
-          highlight={colors.danger}
-          // onClick={() => remove.mutateAsync(listItem)}
-          icon={<FaMinusCircle />}
-        />
-      ) : (
+      {listItem ? null : (
         <TooltipButton
           label="Add to list"
           highlight={colors.indigo}
-          onClick={() =>
-            create.mutateAsync({
-              ...rest,
-              userId: user?.id,
-            })
-          }
+          onClick={() => create.mutateAsync()}
           icon={<FaPlusCircle />}
         />
       )}
