@@ -1,12 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { req } from './request.client'
 import { graphql } from 'generated/gql'
-import type {
-  ListItemInput,
-  QueryListItemsArgs,
-  Book,
-  ListItem,
-} from 'generated/graphql'
+import type { ListItemInput, Book, ListItem } from 'generated/graphql'
 import { useUser } from './auth.client'
 
 const createDocument = graphql(/* GraphQL */ `
@@ -21,7 +16,7 @@ function useCreateListItem(book: Book) {
   const { id, ...rest } = book
   const user = useUser()
 
-  const listItemInput = { userId: user?.id, ...rest }
+  const listItemInput: ListItemInput = { userId: user?.id, ...rest }
   return useMutation({
     mutationFn: () => req(createDocument, { listItemInput }),
 
