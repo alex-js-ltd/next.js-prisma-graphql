@@ -36,9 +36,7 @@ const Query: QueryResolvers = {
       },
     })
 
-    console.log('user list items', user)
-
-    return user?.listItems ? user.listItems : null
+    return user?.listItems ?? null
   },
 }
 
