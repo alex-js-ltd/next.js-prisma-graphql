@@ -21,18 +21,19 @@ model User {
 }
 
 model Book {
-  id            Int    @id @default(autoincrement())
-  title         String @unique
+  id            Int        @id @default(autoincrement())
+  title         String     @unique
   author        String
   coverImageUrl String
   publisher     String
   synopsis      String
   pageCount     Int
+  ListItem      ListItem[]
 }
 
 model ListItem {
   id            Int       @id @default(autoincrement())
-  title         String    @unique
+  title         String
   author        String
   coverImageUrl String
   publisher     String
@@ -43,4 +44,6 @@ model ListItem {
   rating        Int?
   User          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
+  Book          Book      @relation(fields: [bookId], references: [id])
+  bookId        Int
 }

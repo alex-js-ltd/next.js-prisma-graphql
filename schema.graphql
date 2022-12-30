@@ -11,6 +11,7 @@ type Book {
 }
 
 type ListItem {
+  bookId: Int!
   id: Int!
   title: String!
   author: String!
@@ -38,17 +39,16 @@ type Mutation {
   register(email: String!, password: String!): User
   login(email: String!, password: String!): User
   logout: User
-  createListItem(listItemInput: ListItemInput!): String
+  createListItem(listItemInput: CreateListItemInput!): String
 }
 
-input ListItemInput {
+input CreateListItemInput {
   userId: Int
+  bookId: Int!
   title: String!
   author: String!
   coverImageUrl: String!
   publisher: String!
   synopsis: String!
   pageCount: Int!
-  rating: Int
-  finishDate: DateTime
 }

@@ -47,18 +47,19 @@ const Mutation: MutationResolvers = {
   },
 
   async createListItem(_parent, args, ctx) {
-    if (!ctx.req.session.user) return null
+    if (!ctx.req.session.user?.id) return null
 
     const { listItemInput } = args
-    const { userId, ...rest } = listItemInput
-
-    if (!userId) return null
+    const { bookId, userId, ...rest } = listItemInput
 
     const user = await prisma.listItem.create({
       data: {
         ...rest,
         User: {
-          connect: { id: userId },
+          connect: { id: ctx.req.session.user.id },
+        },
+        Book: {
+          connect: { id: bookId },
         },
       },
     })

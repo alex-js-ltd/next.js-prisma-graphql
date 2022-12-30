@@ -27,9 +27,21 @@ export type Book = {
   title: Scalars['String'];
 };
 
+export type CreateListItemInput = {
+  author: Scalars['String'];
+  bookId: Scalars['Int'];
+  coverImageUrl: Scalars['String'];
+  pageCount: Scalars['Int'];
+  publisher: Scalars['String'];
+  synopsis: Scalars['String'];
+  title: Scalars['String'];
+  userId?: InputMaybe<Scalars['Int']>;
+};
+
 export type ListItem = {
   __typename?: 'ListItem';
   author: Scalars['String'];
+  bookId: Scalars['Int'];
   coverImageUrl: Scalars['String'];
   finishDate?: Maybe<Scalars['DateTime']>;
   id: Scalars['Int'];
@@ -39,18 +51,6 @@ export type ListItem = {
   startDate: Scalars['DateTime'];
   synopsis: Scalars['String'];
   title: Scalars['String'];
-};
-
-export type ListItemInput = {
-  author: Scalars['String'];
-  coverImageUrl: Scalars['String'];
-  finishDate?: InputMaybe<Scalars['DateTime']>;
-  pageCount: Scalars['Int'];
-  publisher: Scalars['String'];
-  rating?: InputMaybe<Scalars['Int']>;
-  synopsis: Scalars['String'];
-  title: Scalars['String'];
-  userId?: InputMaybe<Scalars['Int']>;
 };
 
 export type Mutation = {
@@ -63,7 +63,7 @@ export type Mutation = {
 
 
 export type MutationCreateListItemArgs = {
-  listItemInput: ListItemInput;
+  listItemInput: CreateListItemInput;
 };
 
 
@@ -167,10 +167,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Book: ResolverTypeWrapper<Book>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  CreateListItemInput: CreateListItemInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   ListItem: ResolverTypeWrapper<ListItem>;
-  ListItemInput: ListItemInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -181,10 +181,10 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Book: Book;
   Boolean: Scalars['Boolean'];
+  CreateListItemInput: CreateListItemInput;
   DateTime: Scalars['DateTime'];
   Int: Scalars['Int'];
   ListItem: ListItem;
-  ListItemInput: ListItemInput;
   Mutation: {};
   Query: {};
   String: Scalars['String'];
@@ -208,6 +208,7 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 
 export type ListItemResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ListItem'] = ResolversParentTypes['ListItem']> = {
   author?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  bookId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   coverImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   finishDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
