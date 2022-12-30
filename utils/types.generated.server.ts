@@ -59,6 +59,7 @@ export type Mutation = {
   logout?: Maybe<User>;
   register?: Maybe<User>;
   removeListItem?: Maybe<Scalars['String']>;
+  updateListItem?: Maybe<Scalars['String']>;
 };
 
 
@@ -83,6 +84,11 @@ export type MutationRemoveListItemArgs = {
   id: Scalars['Int'];
 };
 
+
+export type MutationUpdateListItemArgs = {
+  listItemInput: UpdateListItemInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   books?: Maybe<Array<Maybe<Book>>>;
@@ -99,8 +105,11 @@ export type UpdateListItemInput = {
   author: Scalars['String'];
   bookId: Scalars['Int'];
   coverImageUrl: Scalars['String'];
+  finishDate?: InputMaybe<Scalars['DateTime']>;
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
+  rating?: InputMaybe<Scalars['Int']>;
+  startDate: Scalars['DateTime'];
   synopsis: Scalars['String'];
   title: Scalars['String'];
 };
@@ -244,6 +253,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   logout?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password'>>;
   removeListItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationRemoveListItemArgs, 'id'>>;
+  updateListItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationUpdateListItemArgs, 'listItemInput'>>;
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
