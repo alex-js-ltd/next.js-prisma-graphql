@@ -44,7 +44,16 @@ type Mutation {
 }
 
 input CreateListItemInput {
-  userId: Int
+  bookId: Int!
+  title: String!
+  author: String!
+  coverImageUrl: String!
+  publisher: String!
+  synopsis: String!
+  pageCount: Int!
+}
+
+input UpdateListItemInput {
   bookId: Int!
   title: String!
   author: String!

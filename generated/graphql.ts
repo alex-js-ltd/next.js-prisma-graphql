@@ -34,7 +34,6 @@ export type CreateListItemInput = {
   publisher: Scalars['String'];
   synopsis: Scalars['String'];
   title: Scalars['String'];
-  userId?: InputMaybe<Scalars['Int']>;
 };
 
 export type ListItem = {
@@ -93,6 +92,16 @@ export type Query = {
 
 export type QueryBooksArgs = {
   query?: InputMaybe<Scalars['String']>;
+};
+
+export type UpdateListItemInput = {
+  author: Scalars['String'];
+  bookId: Scalars['Int'];
+  coverImageUrl: Scalars['String'];
+  pageCount: Scalars['Int'];
+  publisher: Scalars['String'];
+  synopsis: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type User = {

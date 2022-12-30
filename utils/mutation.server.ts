@@ -50,7 +50,7 @@ const Mutation: MutationResolvers = {
     if (!ctx.req.session.user?.id) return null
 
     const { listItemInput } = args
-    const { bookId, userId, ...rest } = listItemInput
+    const { bookId, ...rest } = listItemInput
 
     const user = await prisma.listItem.create({
       data: {
