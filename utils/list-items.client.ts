@@ -5,8 +5,8 @@ import type {
   CreateListItemInput,
   UpdateListItemInput,
   Book,
-  ListItem,
 } from 'generated/graphql'
+import type { ListItem } from '@prisma/client'
 
 function useCreateListItem(book: Book) {
   const queryClient = useQueryClient()

@@ -16,6 +16,8 @@ function ListItemList({
     )
   }
 
+  console.log(list)
+
   return (
     <BookListUL>
       {list?.map(listItem => (
