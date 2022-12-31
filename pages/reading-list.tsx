@@ -10,19 +10,7 @@ const ReadingList = () => {
 
   const filter = list.filter((li: ListItem) => li.finishDate === null)
 
-  return (
-    <ListItemList
-      list={filter}
-      noListItems={
-        <p>
-          Hey there! Welcome to your bookshelf reading list. Get started by
-          heading over to{' '}
-          <StyledLink href="/books">the Discover page</StyledLink> to add books
-          to your list.
-        </p>
-      }
-    />
-  )
+  return <ListItemList list={filter} />
 }
 
 ReadingList.getLayout = function getLayout(page: ReactElement) {
