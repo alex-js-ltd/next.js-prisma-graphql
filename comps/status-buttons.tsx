@@ -64,7 +64,7 @@ type StatusProps<T> = {
 const StatusButtons = <T extends Book>({ book }: StatusProps<T>) => {
   const listItem = useListItem(book)
   const create = useCreateListItem(book)
-  const remove = useRemoveListItem(listItem)
+  const remove = useRemoveListItem()
   const update = useUpdateListItem()
 
   return (
@@ -98,7 +98,7 @@ const StatusButtons = <T extends Book>({ book }: StatusProps<T>) => {
         <TooltipButton
           label="Remove from list"
           highlight={colors.danger}
-          onClick={() => remove.mutateAsync()}
+          onClick={() => remove.mutateAsync(listItem?.id)}
           icon={<FaMinusCircle />}
         />
       ) : (

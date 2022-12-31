@@ -41,11 +41,12 @@ function useCreateListItem(book: Book) {
   })
 }
 
-function useRemoveListItem(listItem: ListItem | null) {
+function useUpdateListItem() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: () => req(removeDocument, { removeListItemId: listItem?.id }),
+    mutationFn: (listItemInput: UpdateListItemInput) =>
+      req(updateDocument, { listItemInput }),
 
     onSuccess() {
       queryClient.invalidateQueries(['list-items'])
@@ -53,13 +54,12 @@ function useRemoveListItem(listItem: ListItem | null) {
   })
 }
 
-function useUpdateListItem() {
+function useRemoveListItem() {
   const queryClient = useQueryClient()
-  const date = new Date(Date.now()).toISOString()
 
   return useMutation({
-    mutationFn: (listItemInput: UpdateListItemInput) =>
-      req(updateDocument, { listItemInput }),
+    mutationFn: (removeListItemId?: number) =>
+      req(removeDocument, { removeListItemId }),
 
     onSuccess() {
       queryClient.invalidateQueries(['list-items'])
