@@ -7,11 +7,16 @@ import type {
   Book,
   ListItem,
 } from 'generated/graphql'
-import { formatDate } from './format-date.client'
 
 const createDocument = graphql(/* GraphQL */ `
   mutation createListItem($listItemInput: CreateListItemInput!) {
     createListItem(listItemInput: $listItemInput)
+  }
+`)
+
+const updateDocument = graphql(/* GraphQL */ `
+  mutation updateListItem($listItemInput: UpdateListItemInput!) {
+    updateListItem(listItemInput: $listItemInput)
   }
 `)
 
@@ -48,14 +53,13 @@ function useRemoveListItem(listItem: ListItem | null) {
   })
 }
 
-function useUpdateListItem(listItem: ListItem) {
+function useUpdateListItem() {
   const queryClient = useQueryClient()
   const date = new Date(Date.now()).toISOString()
 
-  const listItemInput: UpdateListItemInput = { ...listItem }
-
   return useMutation({
-    mutationFn: () => req(createDocument, { listItemInput }),
+    mutationFn: (listItemInput: UpdateListItemInput) =>
+      req(updateDocument, { listItemInput }),
 
     onSuccess() {
       queryClient.invalidateQueries(['list-items'])

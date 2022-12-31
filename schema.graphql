@@ -11,8 +11,8 @@ type Book {
 }
 
 type ListItem {
-  bookId: Int!
   id: Int!
+  bookId: Int!
   title: String!
   author: String!
   coverImageUrl: String!
@@ -55,6 +55,7 @@ input CreateListItemInput {
 }
 
 input UpdateListItemInput {
+  id: Int!
   bookId: Int!
   title: String!
   author: String!

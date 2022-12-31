@@ -15,6 +15,7 @@ import {
   useCreateListItem,
   useListItem,
   useRemoveListItem,
+  useUpdateListItem,
 } from 'utils/list-items.client'
 import type { Book } from 'generated/graphql'
 
@@ -64,9 +65,28 @@ const StatusButtons = <T extends Book>({ book }: StatusProps<T>) => {
   const listItem = useListItem(book)
   const create = useCreateListItem(book)
   const remove = useRemoveListItem(listItem)
+  const update = useUpdateListItem()
 
   return (
     <Fragment>
+      {listItem ? (
+        Boolean(listItem.finishDate) ? (
+          <TooltipButton
+            label="Mark as unread"
+            highlight={colors.yellow}
+            onClick={() => update.mutateAsync({ ...listItem, title: 'hello' })}
+            icon={<FaBook />}
+          />
+        ) : (
+          <TooltipButton
+            label="Mark as read"
+            highlight={colors.green}
+            onClick={() => update.mutateAsync({ ...listItem, title: 'hello' })}
+            icon={<FaCheckCircle />}
+          />
+        )
+      ) : null}
+
       {listItem ? (
         <TooltipButton
           label="Remove from list"

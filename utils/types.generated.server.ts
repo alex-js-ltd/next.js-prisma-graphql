@@ -106,6 +106,7 @@ export type UpdateListItemInput = {
   bookId: Scalars['Int'];
   coverImageUrl: Scalars['String'];
   finishDate?: InputMaybe<Scalars['DateTime']>;
+  id: Scalars['Int'];
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
   rating?: InputMaybe<Scalars['Int']>;

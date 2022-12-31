@@ -67,6 +67,20 @@ const Mutation: MutationResolvers = {
     return 'list item created'
   },
 
+  async updateListItem(_parent, args, ctx) {
+    if (!ctx.req.session.user?.id) return null
+
+    const { listItemInput } = args
+    const { id, bookId, ...rest } = listItemInput
+
+    const update = await prisma.listItem.update({
+      where: { id },
+      data: { ...rest },
+    })
+
+    return 'update list item'
+  },
+
   async removeListItem(_parent, args, ctx) {
     if (!ctx.req.session.user?.id) return null
 
