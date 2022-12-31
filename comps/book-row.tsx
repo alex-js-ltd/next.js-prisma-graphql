@@ -4,14 +4,14 @@ import Link from 'next/link'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 import { StatusButtons } from './status-buttons'
-
-import type { Book } from 'generated/graphql'
+import { Rating } from './rating'
+import type { ListItem } from '@prisma/client'
 
 type BookRowProps<T> = {
   book: T
 }
 
-const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
+const BookRow = <T extends ListItem>({ book }: BookRowProps<T>) => {
   const { title, author, coverImageUrl, synopsis, publisher, id } = book
 
   return (
@@ -68,6 +68,7 @@ const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
               >
                 {title}
               </h2>
+              {isFinished(book) ? <Rating listItem={book} /> : null}
             </div>
             <div css={{ marginLeft: 10 }}>
               <div
@@ -106,3 +107,12 @@ const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
 }
 
 export { BookRow }
+
+function isFinished(valueToTest: any) {
+  return (
+    valueToTest &&
+    typeof valueToTest === 'object' &&
+    'finishDate' in valueToTest &&
+    typeof valueToTest['finishDate'] === 'string'
+  )
+}
