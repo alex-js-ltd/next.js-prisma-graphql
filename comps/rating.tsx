@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { useUpdateListItem } from 'utils/list-items.client'
 import { FaStar } from 'react-icons/fa'
 import * as colors from 'styles/colors'
 import { ErrorMessage } from 'comps/lib'
-
-import { ListItem } from '@prisma/client'
-import { CSSObject } from '@emotion/react'
+import type { ListItem } from '@prisma/client'
+import type { CSSObject } from '@emotion/react'
 
 const visuallyHiddenCSS: CSSObject = {
   border: '0',

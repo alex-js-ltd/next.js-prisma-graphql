@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import type { NextPageWithLayout } from './_app'
 import type { FormEvent } from 'react'
-import type { Book } from 'generated/graphql'
+import type { Book } from '@prisma/client'
 import * as colors from 'styles/colors'
 import Layout from 'comps/layout'
 import { useState } from 'react'
