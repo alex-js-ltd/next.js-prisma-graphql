@@ -8,24 +8,6 @@ import type {
   ListItem,
 } from 'generated/graphql'
 
-const createDocument = graphql(/* GraphQL */ `
-  mutation createListItem($listItemInput: CreateListItemInput!) {
-    createListItem(listItemInput: $listItemInput)
-  }
-`)
-
-const updateDocument = graphql(/* GraphQL */ `
-  mutation updateListItem($listItemInput: UpdateListItemInput!) {
-    updateListItem(listItemInput: $listItemInput)
-  }
-`)
-
-const removeDocument = graphql(/* GraphQL */ `
-  mutation removeListItem($removeListItemId: Int!) {
-    removeListItem(id: $removeListItemId)
-  }
-`)
-
 function useCreateListItem(book: Book) {
   const queryClient = useQueryClient()
 
@@ -67,24 +49,6 @@ function useRemoveListItem() {
   })
 }
 
-const listItemsDocument = graphql(/* GraphQL */ `
-  query listItems {
-    listItems {
-      bookId
-      id
-      title
-      author
-      coverImageUrl
-      publisher
-      synopsis
-      pageCount
-      startDate
-      finishDate
-      rating
-    }
-  }
-`)
-
 function useListItems() {
   const result = useQuery<{ listItems: ListItem[] }, Error>({
     queryKey: ['list-items'],
@@ -113,6 +77,42 @@ export {
   useRemoveListItem,
   useUpdateListItem,
 }
+
+const createDocument = graphql(/* GraphQL */ `
+  mutation createListItem($listItemInput: CreateListItemInput!) {
+    createListItem(listItemInput: $listItemInput)
+  }
+`)
+
+const updateDocument = graphql(/* GraphQL */ `
+  mutation updateListItem($listItemInput: UpdateListItemInput!) {
+    updateListItem(listItemInput: $listItemInput)
+  }
+`)
+
+const removeDocument = graphql(/* GraphQL */ `
+  mutation removeListItem($removeListItemId: Int!) {
+    removeListItem(id: $removeListItemId)
+  }
+`)
+
+const listItemsDocument = graphql(/* GraphQL */ `
+  query listItems {
+    listItems {
+      bookId
+      id
+      title
+      author
+      coverImageUrl
+      publisher
+      synopsis
+      pageCount
+      startDate
+      finishDate
+      rating
+    }
+  }
+`)
 
 function isListItem(valueToTest: any) {
   return (
