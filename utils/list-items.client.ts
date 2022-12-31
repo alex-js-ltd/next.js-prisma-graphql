@@ -26,7 +26,7 @@ function useCreateListItem(book: Book) {
 function useUpdateListItem() {
   const queryClient = useQueryClient()
 
-  return useMutation({
+  return useMutation<ListItem, Error, UpdateListItemInput>({
     mutationFn: (listItemInput: UpdateListItemInput) =>
       req(updateDocument, { listItemInput }),
 
