@@ -74,14 +74,21 @@ const StatusButtons = <T extends Book>({ book }: StatusProps<T>) => {
           <TooltipButton
             label="Mark as unread"
             highlight={colors.yellow}
-            onClick={() => update.mutateAsync({ ...listItem, title: 'hello' })}
+            onClick={() =>
+              update.mutateAsync({ ...listItem, finishDate: null })
+            }
             icon={<FaBook />}
           />
         ) : (
           <TooltipButton
             label="Mark as read"
             highlight={colors.green}
-            onClick={() => update.mutateAsync({ ...listItem, title: 'hello' })}
+            onClick={() =>
+              update.mutateAsync({
+                ...listItem,
+                finishDate: new Date(Date.now()).toISOString(),
+              })
+            }
             icon={<FaCheckCircle />}
           />
         )
