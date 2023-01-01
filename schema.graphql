@@ -66,4 +66,5 @@ input UpdateListItemInput {
   startDate: DateTime!
   finishDate: DateTime
   rating: Int
+  notes: String
 }

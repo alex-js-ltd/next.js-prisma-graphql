@@ -42,6 +42,7 @@ model ListItem {
   startDate     DateTime  @default(now())
   finishDate    DateTime?
   rating        Int?
+  notes         String?
   User          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
   Book          Book      @relation(fields: [bookId], references: [id])
