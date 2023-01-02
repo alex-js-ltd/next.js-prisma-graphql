@@ -2,7 +2,7 @@ import { req } from './request.client'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import type { Book } from 'generated/graphql'
-import bookPlaceholderSvg from 'assets/book-placeholder.svg'
+import bookPlaceholderSvg from 'public/book-placeholder.svg'
 
 function useBooks(query: string) {
   const queryClient = useQueryClient()
@@ -24,12 +24,14 @@ function useBooks(query: string) {
 }
 
 function useBook(id: string | string[] | undefined) {
-  const result = useQuery<Book, Error>({
-    queryKey: ['book', id],
-    queryFn: () => req(bookQueryDocument, { id }),
+  const bookId = Number(id)
+
+  const result = useQuery<{ book: Book }, Error>({
+    queryKey: ['book', bookId],
+    queryFn: () => req(bookQueryDocument, { bookId }),
   })
 
-  return result?.data ?? loadingBook
+  return result?.data?.book ?? loadingBook
 }
 
 export { useBooks, useBook }

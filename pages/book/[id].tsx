@@ -7,7 +7,7 @@ import * as colors from 'styles/colors'
 
 import { useBook } from 'utils/books.client'
 
-const Book = () => {
+const Book: NextPageWithLayout = () => {
   const router = useRouter()
   const { id } = router.query
 
@@ -19,6 +19,7 @@ const Book = () => {
     <div>
       <div
         css={{
+          position: 'relative',
           display: 'grid',
           gridTemplateColumns: '1fr 2fr',
           gridGap: '2em',

@@ -31,6 +31,8 @@ const Query: QueryResolvers = {
       },
     })
 
+    console.log(book)
+
     return book
   },
 
