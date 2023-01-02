@@ -5,14 +5,14 @@ import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 import { StatusButtons } from './status-buttons'
 import { Rating } from './rating'
-import type { Book } from '@prisma/client'
+import type { Book, ListItem } from '@prisma/client'
 import { isFinished, isListItem } from 'utils/type-guard.client'
 
 type BookRowProps<T> = {
   book: T
 }
 
-const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
+const BookRow = <T extends Book & ListItem>({ book }: BookRowProps<T>) => {
   const { title, author, coverImageUrl, synopsis, publisher, id } = book
 
   const listItem = isListItem(book)

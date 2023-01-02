@@ -22,6 +22,8 @@ const Book: NextPageWithLayout = () => {
   const book = useBook(id)
   const listItem = useListItem(book)
 
+  if (!book) return null
+
   const { coverImageUrl, title, author, publisher, synopsis } = book
 
   return (

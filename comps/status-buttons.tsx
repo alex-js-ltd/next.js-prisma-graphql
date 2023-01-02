@@ -18,16 +18,22 @@ import {
   useRemoveListItem,
   useUpdateListItem,
 } from 'utils/list-items.client'
-import type { Book } from 'generated/graphql'
+import type { Book, ListItem } from '@prisma/client'
 
-type Props = {
+type TooolTipProps = {
   label?: string
   highlight?: string
   onClick: Function
   icon: ReactElement
 }
 
-function TooltipButton({ label, highlight, onClick, icon, ...rest }: Props) {
+function TooltipButton({
+  label,
+  highlight,
+  onClick,
+  icon,
+  ...rest
+}: TooolTipProps) {
   const { isLoading, isError, error, run } = useAsync()
 
   const handleClick = () => {
@@ -62,7 +68,7 @@ type StatusProps<T> = {
   book: T
 }
 
-const StatusButtons = <T extends Book>({ book }: StatusProps<T>) => {
+const StatusButtons = <T extends Book | ListItem>({ book }: StatusProps<T>) => {
   const listItem = useListItem(book)
   const create = useCreateListItem(book)
   const remove = useRemoveListItem()
