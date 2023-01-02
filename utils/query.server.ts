@@ -1,3 +1,4 @@
+import { Context } from 'pages/api/graphql'
 import { QueryResolvers } from './types.generated.server'
 
 const Query: QueryResolvers = {
@@ -15,7 +16,11 @@ const Query: QueryResolvers = {
       },
     })
 
-    return books
+    const listItems = await getListItems(ctx)
+
+    const bookIds = listItems?.map(li => li.bookId)
+
+    return books?.filter(b => !bookIds?.includes(b.id)) ?? []
   },
 
   async book(_parent, args, ctx) {
@@ -31,8 +36,6 @@ const Query: QueryResolvers = {
       },
     })
 
-    console.log(book)
-
     return book
   },
 
@@ -43,19 +46,25 @@ const Query: QueryResolvers = {
   },
 
   async listItems(_parent, _args, ctx) {
-    if (!ctx.req.session.user?.id) return null
-
-    const user = await ctx.prisma.user.findUnique({
-      where: {
-        id: ctx.req.session.user.id,
-      },
-      include: {
-        listItems: true,
-      },
-    })
-
-    return user?.listItems ?? null
+    return await getListItems(ctx)
   },
 }
 
 export default Query
+
+async function getListItems(ctx: Context) {
+  const id = ctx?.req?.session?.user?.id
+
+  if (!id) return null
+
+  const user = await ctx.prisma.user.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      listItems: true,
+    },
+  })
+
+  return user?.listItems ?? null
+}
