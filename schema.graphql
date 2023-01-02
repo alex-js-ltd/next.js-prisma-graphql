@@ -31,6 +31,7 @@ type User {
 
 type Query {
   books(query: String): [Book]
+  book(id: Int): Book
   user: User
   listItems: [ListItem]
 }

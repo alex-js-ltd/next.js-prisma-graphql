@@ -3,20 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import type { Book } from 'generated/graphql'
 
-const booksQueryDocument = graphql(/* GraphQL */ `
-  query books($query: String) {
-    books(query: $query) {
-      id
-      author
-      coverImageUrl
-      pageCount
-      publisher
-      synopsis
-      title
-    }
-  }
-`)
-
 function useBooks(query: string) {
   const queryClient = useQueryClient()
 
@@ -35,4 +21,42 @@ function useBooks(query: string) {
 
   return { ...result, books: result?.data?.books ?? [] }
 }
-export { useBooks }
+
+function useBook(id: string | undefined) {
+  const result = useQuery<Book | null, Error>({
+    queryKey: ['book', id],
+    queryFn: () => req(bookQueryDocument, { id }),
+  })
+
+  return result?.data ?? null
+}
+
+export { useBooks, useBook }
+
+const booksQueryDocument = graphql(/* GraphQL */ `
+  query books($query: String) {
+    books(query: $query) {
+      id
+      author
+      coverImageUrl
+      pageCount
+      publisher
+      synopsis
+      title
+    }
+  }
+`)
+
+const bookQueryDocument = graphql(/* GraphQL */ `
+  query book($bookId: Int) {
+    book(id: $bookId) {
+      id
+      title
+      author
+      coverImageUrl
+      publisher
+      synopsis
+      pageCount
+    }
+  }
+`)

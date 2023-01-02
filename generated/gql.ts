@@ -18,6 +18,7 @@ const documents = {
     "\n  mutation logout {\n    logout {\n      id\n      email\n    }\n  }\n": types.LogoutDocument,
     "\n  query user {\n    user {\n      id\n      email\n    }\n  }\n": types.UserDocument,
     "\n  query books($query: String) {\n    books(query: $query) {\n      id\n      author\n      coverImageUrl\n      pageCount\n      publisher\n      synopsis\n      title\n    }\n  }\n": types.BooksDocument,
+    "\n  query book($bookId: Int) {\n    book(id: $bookId) {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n    }\n  }\n": types.BookDocument,
     "\n  mutation createListItem($listItemInput: CreateListItemInput!) {\n    createListItem(listItemInput: $listItemInput)\n  }\n": types.CreateListItemDocument,
     "\n  mutation updateListItem($listItemInput: UpdateListItemInput!) {\n    updateListItem(listItemInput: $listItemInput)\n  }\n": types.UpdateListItemDocument,
     "\n  mutation removeListItem($removeListItemId: Int!) {\n    removeListItem(id: $removeListItemId)\n  }\n": types.RemoveListItemDocument,
@@ -44,6 +45,10 @@ export function graphql(source: "\n  query user {\n    user {\n      id\n      e
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query books($query: String) {\n    books(query: $query) {\n      id\n      author\n      coverImageUrl\n      pageCount\n      publisher\n      synopsis\n      title\n    }\n  }\n"): (typeof documents)["\n  query books($query: String) {\n    books(query: $query) {\n      id\n      author\n      coverImageUrl\n      pageCount\n      publisher\n      synopsis\n      title\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query book($bookId: Int) {\n    book(id: $bookId) {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n    }\n  }\n"): (typeof documents)["\n  query book($bookId: Int) {\n    book(id: $bookId) {\n      id\n      title\n      author\n      coverImageUrl\n      publisher\n      synopsis\n      pageCount\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

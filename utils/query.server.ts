@@ -18,6 +18,22 @@ const Query: QueryResolvers = {
     return books
   },
 
+  async book(_parent, args, ctx) {
+    if (!ctx.req.session.user) return null
+
+    const { id } = args
+
+    if (!id) return null
+
+    const book = await ctx.prisma.book.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return book
+  },
+
   async user(_parent, _args, ctx) {
     const user = ctx.req.session.user
 
