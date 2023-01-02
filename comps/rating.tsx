@@ -3,7 +3,6 @@ import { useUpdateListItem } from 'utils/list-items.client'
 import { FaStar } from 'react-icons/fa'
 import * as colors from 'styles/colors'
 import { ErrorMessage } from 'comps/lib'
-import type { ListItem } from '@prisma/client'
 import type { CSSObject } from '@emotion/react'
 
 const visuallyHiddenCSS: CSSObject = {
@@ -18,7 +17,7 @@ const visuallyHiddenCSS: CSSObject = {
 }
 
 type Props = {
-  listItem: ListItem
+  listItem: any
 }
 
 function Rating({ listItem }: Props) {
