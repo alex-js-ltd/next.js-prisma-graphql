@@ -9,44 +9,6 @@ import type {
 } from 'generated/graphql'
 import type { RequestDocument } from 'graphql-request'
 
-const registerMutationDocument = graphql(/* GraphQL */ `
-  mutation register($email: String!, $password: String!) {
-    register(email: $email, password: $password) {
-      id
-      email
-    }
-  }
-`)
-
-const loginMutationDocument = graphql(/* GraphQL */ `
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      id
-      email
-    }
-  }
-`)
-
-const logoutMutationDocument = graphql(/* GraphQL */ `
-  mutation logout {
-    logout {
-      id
-      email
-    }
-  }
-`)
-
-const userQueryDocument = graphql(/* GraphQL */ `
-  query user {
-    user {
-      id
-      email
-    }
-  }
-`)
-
-type Props = MutationLoginArgs | MutationRegisterArgs
-
 function useAuth(document: RequestDocument) {
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -87,3 +49,41 @@ function useUser() {
 }
 
 export { useAuth, useLogout, useUser }
+
+const registerMutationDocument = graphql(/* GraphQL */ `
+  mutation register($email: String!, $password: String!) {
+    register(email: $email, password: $password) {
+      id
+      email
+    }
+  }
+`)
+
+const loginMutationDocument = graphql(/* GraphQL */ `
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      id
+      email
+    }
+  }
+`)
+
+const logoutMutationDocument = graphql(/* GraphQL */ `
+  mutation logout {
+    logout {
+      id
+      email
+    }
+  }
+`)
+
+const userQueryDocument = graphql(/* GraphQL */ `
+  query user {
+    user {
+      id
+      email
+    }
+  }
+`)
+
+type Props = MutationLoginArgs | MutationRegisterArgs
