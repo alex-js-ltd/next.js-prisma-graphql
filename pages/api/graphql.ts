@@ -7,6 +7,7 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from 'utils/session.server'
 import type { PrismaClient } from '@prisma/client'
 import type { NextApiResponse, NextApiRequest } from 'next'
+import path from 'path'
 
 export type Context = {
   prisma: PrismaClient
@@ -14,7 +15,9 @@ export type Context = {
   req: NextApiRequest
 }
 
-const typeDefs = readFileSync('next.js-prisma-graphql' + './schema.graphql', {
+const rootDirectory = path.join(process.cwd(), '/')
+
+const typeDefs = readFileSync(rootDirectory + './schema.graphql', {
   encoding: 'utf-8',
 })
 
