@@ -1,19 +1,22 @@
-import type { ReactElement } from 'react'
+import type { ReactElement, SyntheticEvent } from 'react'
 import type { NextPageWithLayout } from 'pages/_app'
 import type { ListItem } from 'generated/graphql'
+import { useMemo, Fragment } from 'react'
 import Layout from 'comps/layout'
 import { useRouter } from 'next/router'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 import { StatusButtons } from 'comps/status-buttons'
 import { Rating } from 'comps/rating'
+import { ErrorMessage, Spinner, Textarea } from 'comps/lib'
 
 import { useBook } from 'utils/books.client'
-import { useListItem } from 'utils/list-items.client'
+import { useListItem, useUpdateListItem } from 'utils/list-items.client'
 import { isFinished } from 'utils/type-guard.client'
 
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import { Tooltip } from '@reach/tooltip'
+import debounceFn from 'debounce-fn'
 
 const Book: NextPageWithLayout = () => {
   const router = useRouter()
@@ -70,14 +73,16 @@ const Book: NextPageWithLayout = () => {
             </div>
           </div>
           <div css={{ marginTop: 10, height: 46 }}>
-            {isFinished(listItem) ? <Rating listItem={listItem} /> : null}
+            {isFinished(listItem) && listItem ? (
+              <Rating listItem={listItem} />
+            ) : null}
             {listItem ? <ListItemTimeframe listItem={listItem} /> : null}
           </div>
           <br />
           <p>{synopsis}</p>
         </div>
       </div>
-      {/* {listItem ? <NotesTextarea listItem={listItem} /> : null} */}
+      {listItem ? <NotesTextarea listItem={listItem} /> : null}
     </div>
   )
 }
@@ -105,5 +110,45 @@ function ListItemTimeframe({ listItem }: { listItem: ListItem }) {
         </span>
       </div>
     </Tooltip>
+  )
+}
+
+function NotesTextarea({ listItem }: { listItem: ListItem }) {
+  const { mutateAsync, isError, error, isLoading } = useUpdateListItem()
+
+  const debouncedMutate = useMemo(
+    () => debounceFn(mutateAsync, { wait: 300 }),
+    [mutateAsync],
+  )
+
+  function handleNotesChange(e: SyntheticEvent<HTMLTextAreaElement>) {
+    debouncedMutate({ ...listItem, notes: e.currentTarget.value })
+  }
+
+  return (
+    <Fragment>
+      <div>
+        <label
+          htmlFor="notes"
+          css={{
+            display: 'inline-block',
+            marginRight: 10,
+            marginTop: '0',
+            marginBottom: '0.5rem',
+            fontWeight: 'bold',
+          }}
+        >
+          Notes
+        </label>
+        {isError ? <ErrorMessage variant="inline" error={error} /> : null}
+        {isLoading ? <Spinner /> : null}
+      </div>
+      <Textarea
+        id="notes"
+        defaultValue={listItem?.notes ? listItem.notes : ''}
+        onChange={handleNotesChange}
+        css={{ width: '100%', minHeight: 300 }}
+      />
+    </Fragment>
   )
 }

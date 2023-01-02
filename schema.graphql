@@ -22,6 +22,7 @@ type ListItem {
   startDate: DateTime!
   finishDate: DateTime
   rating: Int
+  notes: String
 }
 
 type User {

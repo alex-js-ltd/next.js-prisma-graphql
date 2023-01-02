@@ -44,6 +44,7 @@ export type ListItem = {
   coverImageUrl: Scalars['String'];
   finishDate?: Maybe<Scalars['DateTime']>;
   id: Scalars['Int'];
+  notes?: Maybe<Scalars['String']>;
   pageCount: Scalars['Int'];
   publisher: Scalars['String'];
   rating?: Maybe<Scalars['Int']>;
@@ -246,6 +247,7 @@ export type ListItemResolvers<ContextType = Context, ParentType extends Resolver
   coverImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   finishDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  notes?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   pageCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   publisher?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   rating?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;

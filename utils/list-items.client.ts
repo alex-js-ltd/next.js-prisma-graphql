@@ -110,6 +110,7 @@ const listItemsDocument = graphql(/* GraphQL */ `
       startDate
       finishDate
       rating
+      notes
     }
   }
 `)
