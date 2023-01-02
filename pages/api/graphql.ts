@@ -14,7 +14,9 @@ export type Context = {
   req: NextApiRequest
 }
 
-const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' })
+const typeDefs = readFileSync('next.js-prisma-graphql' + './schema.graphql', {
+  encoding: 'utf-8',
+})
 
 const server = new ApolloServer({
   typeDefs,
