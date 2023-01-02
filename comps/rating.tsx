@@ -19,7 +19,7 @@ const visuallyHiddenCSS: CSSObject = {
 }
 
 type Props = {
-  listItem: ListItem
+  listItem: any
 }
 
 function Rating({ listItem }: Props) {
