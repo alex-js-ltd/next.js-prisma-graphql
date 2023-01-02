@@ -6,18 +6,20 @@ import * as colors from 'styles/colors'
 import { StatusButtons } from './status-buttons'
 import { Rating } from './rating'
 import type { Book, ListItem } from '@prisma/client'
-import { isFinished, isListItem } from 'utils/type-guard.client'
+import { isFinished } from 'utils/type-guard.client'
+
+import { useListItem } from 'utils/list-items.client'
 
 type BookRowProps<T> = {
   book: T
 }
 
-const BookRow = <T extends Book & ListItem>({ book }: BookRowProps<T>) => {
+const BookRow = <T extends Book | ListItem>({ book }: BookRowProps<T>) => {
   const { title, author, coverImageUrl, synopsis, publisher, id } = book
 
-  const listItem = isListItem(book)
+  const listItem = useListItem(book)
 
-  const bookId = listItem ? book?.bookId : id
+  const bookId = listItem ? listItem.bookId : id
 
   return (
     <div
