@@ -6,6 +6,7 @@ import * as colors from 'styles/colors'
 import { StatusButtons } from './status-buttons'
 import { Rating } from './rating'
 import type { Book } from '@prisma/client'
+import { isFinished, isListItem } from 'utils/type-guard.client'
 
 type BookRowProps<T> = {
   book: T
@@ -13,6 +14,10 @@ type BookRowProps<T> = {
 
 const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
   const { title, author, coverImageUrl, synopsis, publisher, id } = book
+
+  const listItem = isListItem(book)
+
+  const bookId = listItem ? book?.bookId : id
 
   return (
     <div
@@ -24,7 +29,7 @@ const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
       }}
     >
       <Link
-        href={`/book/${id}`}
+        href={`/book/${bookId}`}
         css={{
           minHeight: 270,
           flexGrow: 2,
@@ -107,12 +112,3 @@ const BookRow = <T extends Book>({ book }: BookRowProps<T>) => {
 }
 
 export { BookRow }
-
-function isFinished(valueToTest: any) {
-  return (
-    valueToTest &&
-    typeof valueToTest === 'object' &&
-    'finishDate' in valueToTest &&
-    typeof valueToTest['finishDate'] === 'string'
-  )
-}
