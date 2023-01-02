@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
 import '@reach/tooltip/styles.css'
-import React, { ReactElement, Fragment } from 'react'
+import { ReactElement, Fragment } from 'react'
 import {
   FaCheckCircle,
   FaPlusCircle,

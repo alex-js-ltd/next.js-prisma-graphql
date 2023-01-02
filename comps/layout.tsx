@@ -1,6 +1,4 @@
-/** @jsxImportSource @emotion/react */
 import { Fragment, ReactElement } from 'react'
-
 import { Button, StyledLink } from 'comps/lib'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'

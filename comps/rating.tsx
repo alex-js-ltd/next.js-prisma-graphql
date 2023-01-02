@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Fragment } from 'react'
 import { useUpdateListItem } from 'utils/list-items.client'
 import { FaStar } from 'react-icons/fa'

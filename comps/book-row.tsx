@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import Link from 'next/link'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
@@ -7,7 +5,6 @@ import { StatusButtons } from './status-buttons'
 import { Rating } from './rating'
 import type { Book, ListItem } from '@prisma/client'
 import { isFinished } from 'utils/type-guard.client'
-
 import { useListItem } from 'utils/list-items.client'
 
 type BookRowProps<T> = {

@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
 import type { NextPage } from 'next'
-import React, { ReactElement, cloneElement, FormEvent } from 'react'
+import { ReactElement, cloneElement, FormEvent } from 'react'
 import { Button, Input, FormGroup, Spinner, ErrorMessage } from 'comps/lib'
 import { Modal, ModalContents, ModalOpenButton } from 'comps/modal'
 import { useAuth } from 'utils/auth.client'

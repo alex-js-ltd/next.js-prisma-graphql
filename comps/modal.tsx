@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import '@reach/dialog/styles.css'
 import {
   createContext,

@@ -1,6 +1,4 @@
-/** @jsxImportSource @emotion/react */
 import React from 'react'
-
 import styled from '@emotion/styled'
 import { keyframes, CSSObject } from '@emotion/react'
 import Link from 'next/link'
