@@ -50,7 +50,9 @@ const Mutation: MutationResolvers = {
     const { listItemInput } = args
     const { bookId, ...rest } = listItemInput
 
-    const id = Number(ctx?.req?.session?.user?.id)
+    const id = ctx?.req?.session?.user?.id
+
+    if (!id) return null
 
     const user = await prisma.listItem.create({
       data: {
@@ -93,7 +95,7 @@ const Mutation: MutationResolvers = {
 
 export default Mutation
 
-function userSession(user: User | null) {
+function userSession(user: User) {
   return {
     id: user?.id,
     email: user?.email,
