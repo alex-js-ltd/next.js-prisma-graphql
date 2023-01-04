@@ -66,7 +66,7 @@ const Mutation: MutationResolvers = {
       },
     })
 
-    return 'list item created'
+    return 'list item created 🚀'
   }),
 
   updateListItem: authenticated(async (_parent, args, _ctx) => {
@@ -77,7 +77,7 @@ const Mutation: MutationResolvers = {
       where: { id },
       data: { ...rest },
     })
-    return 'update list item'
+    return 'list item updated 🚀'
   }),
 
   removeListItem: authenticated(async (_parent, args, _ctx) => {
@@ -89,7 +89,7 @@ const Mutation: MutationResolvers = {
       },
     })
 
-    return 'list item removed'
+    return 'list item removed 🚀'
   }),
 }
 
