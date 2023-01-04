@@ -1,6 +1,5 @@
 import { GraphQLError } from 'graphql'
 import type { ResolverFn } from './types.generated.server'
-
 import type { Context } from 'pages/api/graphql'
 
 type Resolver<TResult, TParent, TArgs> = ResolverFn<

@@ -69,7 +69,7 @@ const Mutation: MutationResolvers = {
     return 'list item created'
   }),
 
-  updateListItem: authenticated(async (_parent, args, ctx) => {
+  updateListItem: authenticated(async (_parent, args, _ctx) => {
     const { listItemInput } = args
     const { id, bookId, ...rest } = listItemInput
 
@@ -80,7 +80,7 @@ const Mutation: MutationResolvers = {
     return 'update list item'
   }),
 
-  removeListItem: authenticated(async (_parent, args, ctx) => {
+  removeListItem: authenticated(async (_parent, args, _ctx) => {
     const { id } = args
 
     const remove = await prisma.listItem.delete({

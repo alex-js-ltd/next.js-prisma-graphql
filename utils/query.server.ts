@@ -42,7 +42,7 @@ const Query: QueryResolvers = {
     return user ? user : null
   },
 
-  listItems: authenticated(async (_parent, args, ctx) => {
+  listItems: authenticated(async (_parent, _args, ctx) => {
     return await getListItems(ctx)
   }),
 }
