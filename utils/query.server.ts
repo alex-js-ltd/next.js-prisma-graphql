@@ -1,5 +1,5 @@
 import { Context } from 'pages/api/graphql'
-import { QueryResolvers, ResolverFn } from './types.generated.server'
+import { QueryResolvers } from './types.generated.server'
 import { authenticated } from './auth.server'
 
 const Query: QueryResolvers = {

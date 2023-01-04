@@ -2,6 +2,7 @@ import { MutationResolvers } from './types.generated.server'
 import { prisma } from 'utils/prisma.server'
 import bcrypt from 'bcrypt'
 import { User } from '@prisma/client'
+import { authenticated } from './auth.server'
 
 const Mutation: MutationResolvers = {
   async register(_parent, args, ctx) {
@@ -45,9 +46,7 @@ const Mutation: MutationResolvers = {
     return null
   },
 
-  async createListItem(_parent, args, ctx) {
-    if (!ctx.req.session.user?.id) return null
-
+  createListItem: authenticated(async (_parent, args, ctx) => {
     const { listItemInput } = args
     const { bookId, ...rest } = listItemInput
 
@@ -55,7 +54,7 @@ const Mutation: MutationResolvers = {
       data: {
         ...rest,
         User: {
-          connect: { id: ctx.req.session.user.id },
+          connect: { id: ctx?.req?.session?.user?.id },
         },
         Book: {
           connect: { id: bookId },
@@ -64,11 +63,9 @@ const Mutation: MutationResolvers = {
     })
 
     return 'list item created'
-  },
+  }),
 
-  async updateListItem(_parent, args, ctx) {
-    if (!ctx.req.session.user?.id) return null
-
+  updateListItem: authenticated(async (_parent, args, ctx) => {
     const { listItemInput } = args
     const { id, bookId, ...rest } = listItemInput
 
@@ -77,11 +74,9 @@ const Mutation: MutationResolvers = {
       data: { ...rest },
     })
     return 'update list item'
-  },
+  }),
 
-  async removeListItem(_parent, args, ctx) {
-    if (!ctx.req.session.user?.id) return null
-
+  removeListItem: authenticated(async (_parent, args, ctx) => {
     const { id } = args
 
     const remove = await prisma.listItem.delete({
@@ -91,7 +86,7 @@ const Mutation: MutationResolvers = {
     })
 
     return 'list item removed'
-  },
+  }),
 }
 
 export default Mutation
