@@ -36,11 +36,9 @@ const Query: QueryResolvers = {
     return book
   }),
 
-  async user(_parent, _args, ctx) {
-    const user = ctx.req.session.user
-
-    return user ? user : null
-  },
+  user: authenticated(async (_parent, _args, ctx) => {
+    return ctx.req?.session?.user ?? null
+  }),
 
   listItems: authenticated(async (_parent, _args, ctx) => {
     return await getListItems(ctx)
