@@ -10,19 +10,8 @@ export const middleware = async (req: NextRequest) => {
   // do anything with session here:
   const { user } = session
 
-  // like mutate user:
-  // user.something = someOtherThing;
-  // or:
-  // session.user = someoneElse;
-
-  // uncomment next line to commit changes:
-  // await session.save();
-  // or maybe you want to destroy session:
-  // await session.destroy();
-
   console.log('from middleware', { user })
 
-  // demo:
   if (!user?.email) {
     return NextResponse.redirect(new URL('/', req.url))
   }
