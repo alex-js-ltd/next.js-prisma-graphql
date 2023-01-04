@@ -1,11 +1,10 @@
 import { Context } from 'pages/api/graphql'
-import { QueryResolvers } from './types.generated.server'
+import { QueryResolvers, ResolverFn } from './types.generated.server'
+import { authenticated } from './auth.server'
 
 const Query: QueryResolvers = {
-  async books(_parent, args, ctx) {
+  books: authenticated(async (_parent, args, ctx) => {
     const { query } = args
-
-    if (!ctx.req.session.user) return null
 
     const books = await ctx.prisma.book.findMany({
       where: {
@@ -21,11 +20,9 @@ const Query: QueryResolvers = {
     const bookIds = listItems?.map(li => li.bookId)
 
     return books?.filter(b => !bookIds?.includes(b.id)) ?? []
-  },
+  }),
 
-  async book(_parent, args, ctx) {
-    if (!ctx.req.session.user) return null
-
+  book: authenticated(async (_parent, args, ctx) => {
     const { id } = args
 
     if (!id) return null
@@ -37,7 +34,7 @@ const Query: QueryResolvers = {
     })
 
     return book
-  },
+  }),
 
   async user(_parent, _args, ctx) {
     const user = ctx.req.session.user
@@ -45,9 +42,9 @@ const Query: QueryResolvers = {
     return user ? user : null
   },
 
-  async listItems(_parent, _args, ctx) {
+  listItems: authenticated(async (_parent, args, ctx) => {
     return await getListItems(ctx)
-  },
+  }),
 }
 
 export default Query
