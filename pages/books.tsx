@@ -11,6 +11,8 @@ import { useBooks } from 'utils/books.client'
 import { BookRow } from 'comps/book-row'
 import { prisma } from 'utils/prisma.server'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
+import { withIronSessionSsr } from 'iron-session/next'
+import { sessionOptions } from 'utils/session.server'
 
 const Page: NextPageWithLayout = () => {
   const [query, setQuery] = useState<string>('')
@@ -81,27 +83,48 @@ Page.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
-const fetchBooks = async () => {
-  const books = await prisma.book.findMany({
-    skip: 0,
-    take: 10,
+const fetchBooks = async (id: number) => {
+  const books = await prisma.book.findMany({ skip: 0, take: 10 })
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      listItems: true,
+    },
   })
-  return books
+
+  const listItems = user?.listItems
+
+  const bookIds = listItems?.map(li => li.bookId)
+
+  return { books: books?.filter(b => !bookIds?.includes(b.id)) ?? [] }
 }
 
-export async function getStaticProps() {
+export const getServerSideProps = withIronSessionSsr(async function ({
+  req,
+  res,
+}) {
+  const id = Number(req.session.user?.id)
+
+  if (id === undefined) {
+    res.setHeader('location', '/')
+    res.statusCode = 302
+    res.end()
+  }
+
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
     queryKey: ['bookSearch', { query: '' }],
-    queryFn: () => fetchBooks(),
+    queryFn: () => fetchBooks(id),
   })
 
   return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
+    props: { dehydratedState: dehydrate(queryClient) },
   }
-}
+},
+sessionOptions)
 
 export default Page

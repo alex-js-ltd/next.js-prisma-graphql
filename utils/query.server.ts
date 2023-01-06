@@ -6,7 +6,9 @@ const Query: QueryResolvers = {
   books: authenticated(async (_parent, args, ctx) => {
     const { query } = args
 
-    const books = await ctx.prisma.book.findMany({
+    let books
+
+    books = await ctx.prisma.book.findMany({
       where: {
         title: {
           startsWith: query?.toString(),
@@ -19,7 +21,9 @@ const Query: QueryResolvers = {
 
     const bookIds = listItems?.map(li => li.bookId)
 
-    return books?.filter(b => !bookIds?.includes(b.id)) ?? []
+    const filter = books?.filter(b => !bookIds?.includes(b.id))
+
+    return filter ?? []
   }),
 
   book: authenticated(async (_parent, args, ctx) => {
