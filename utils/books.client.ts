@@ -12,9 +12,8 @@ function useBooks(query: string) {
 
     onSuccess(data) {
       if (!data) return
-
       for (const book of data.books) {
-        queryClient.setQueryData(['book', book.id], book)
+        queryClient.setQueryData(['book', book.id], { book })
       }
     },
   })
