@@ -14,12 +14,12 @@ const authenticated =
     next: Resolver<TResult, TParent, TArgs>,
   ): Resolver<TResult, TParent, TArgs> =>
   (parent, args, ctx, info) => {
-    // if (!ctx?.req.session?.user?.id)
-    //   throw new GraphQLError('you must be logged in to query this schema', {
-    //     extensions: {
-    //       code: 'UNAUTHENTICATED',
-    //     },
-    //   })
+    if (!ctx?.req.session?.user?.id)
+      throw new GraphQLError('you must be logged in to query this schema', {
+        extensions: {
+          code: 'UNAUTHENTICATED',
+        },
+      })
 
     return next(parent, args, ctx, info)
   }
