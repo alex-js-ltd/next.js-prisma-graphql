@@ -7,13 +7,13 @@ function useBooks(query: string) {
   const queryClient = useQueryClient()
 
   const result = useQuery<{ books: Book[] }, Error>({
-    queryKey: ['bookSearch', { query }],
+    queryKey: ['bookSearch', { query: query ? query : 'prefetch' }],
     queryFn: async () => req(booksQueryDocument, { query }),
 
     onSuccess(data) {
       if (!data) return
       for (const book of data.books) {
-        queryClient.setQueryData(['book', book.id], { book })
+        queryClient.setQueryData(['book', { bookId: book.id }], { book })
       }
     },
   })
@@ -25,15 +25,18 @@ function useBook(id: string | string[] | undefined) {
   const bookId = Number(id)
   const queryClient = useQueryClient()
 
-  const cacheItem = queryClient.getQueryData<{ book: Book }>(['book', bookId])
+  const cacheItem = queryClient.getQueryData<{ book: Book }>([
+    'book',
+    { bookId },
+  ])
 
   const result = useQuery<{ book: Book }, Error>({
-    queryKey: ['book', bookId],
+    queryKey: ['book', { bookId }],
     queryFn: () => req(bookQueryDocument, { bookId }),
 
     initialData: () => cacheItem,
     initialDataUpdatedAt: () =>
-      queryClient.getQueryState(['book', bookId])?.dataUpdatedAt,
+      queryClient.getQueryState(['book', { bookId }])?.dataUpdatedAt,
   })
 
   return result?.data?.book ?? loadingBook
