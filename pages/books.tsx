@@ -9,13 +9,8 @@ import { FaSearch, FaTimes } from 'react-icons/fa'
 import { Input, BookListUL, Spinner } from 'comps/lib'
 import { useBooks } from 'utils/books.client'
 import { BookRow } from 'comps/book-row'
-import { prisma } from 'utils/prisma.server'
-import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { withIronSessionSsr } from 'iron-session/next'
-import { sessionOptions } from 'utils/session.server'
-import { getListItems } from 'utils/query.server'
 
-const Page: NextPageWithLayout = () => {
+const Books: NextPageWithLayout = () => {
   const [query, setQuery] = useState<string>('')
 
   const { books, error, isLoading, isError } = useBooks(query)
@@ -80,43 +75,8 @@ const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = function getLayout(page: ReactElement) {
+Books.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
-export const getServerSideProps = withIronSessionSsr(async function ({
-  req,
-  res,
-}) {
-  const id = Number(req.session.user?.id)
-
-  if (id === undefined) {
-    res.setHeader('location', '/')
-    res.statusCode = 302
-    res.end()
-  }
-
-  const queryClient = new QueryClient()
-
-  await queryClient.prefetchQuery({
-    queryKey: ['bookSearch', { query: '' }],
-    queryFn: () => fetchBooks(id),
-  })
-
-  return {
-    props: { dehydratedState: dehydrate(queryClient) },
-  }
-},
-sessionOptions)
-
-export default Page
-
-const fetchBooks = async (id: number) => {
-  const books = await prisma.book.findMany({ skip: 0, take: 10 })
-
-  const listItems = await getListItems(id, prisma)
-
-  const bookIds = listItems?.map(li => li.bookId)
-
-  return { books: books?.filter(b => !bookIds?.includes(b.id)) ?? [] }
-}
+export default Books
