@@ -1,6 +1,6 @@
-import { Context } from 'pages/api/graphql'
 import { QueryResolvers } from './types.generated.server'
 import { authenticated } from './auth.server'
+import { PrismaClient } from '@prisma/client'
 
 const Query: QueryResolvers = {
   books: authenticated(async (_parent, args, ctx) => {
@@ -17,13 +17,14 @@ const Query: QueryResolvers = {
       },
     })
 
-    const listItems = await getListItems(ctx)
+    const id = Number(ctx?.req?.session?.user?.id)
+    const prisma = ctx.prisma
+
+    const listItems = await getListItems(id, prisma)
 
     const bookIds = listItems?.map(li => li.bookId)
 
-    const filter = books?.filter(b => !bookIds?.includes(b.id))
-
-    return filter ?? []
+    return books?.filter(b => !bookIds?.includes(b.id)) ?? []
   }),
 
   book: authenticated(async (_parent, args, ctx) => {
@@ -45,18 +46,16 @@ const Query: QueryResolvers = {
   }),
 
   listItems: authenticated(async (_parent, _args, ctx) => {
-    return await getListItems(ctx)
+    const id = Number(ctx?.req?.session?.user?.id)
+    const prisma = ctx.prisma
+    return await getListItems(id, prisma)
   }),
 }
 
 export default Query
 
-async function getListItems(ctx: Context) {
-  const id = ctx?.req?.session?.user?.id
-
-  if (!id) return null
-
-  const user = await ctx.prisma.user.findUnique({
+export async function getListItems(id: number, prisma: PrismaClient) {
+  const user = await prisma.user.findUnique({
     where: {
       id,
     },

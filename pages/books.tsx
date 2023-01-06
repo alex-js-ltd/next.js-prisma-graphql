@@ -13,6 +13,7 @@ import { prisma } from 'utils/prisma.server'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from 'utils/session.server'
+import { getListItems } from 'utils/query.server'
 
 const Page: NextPageWithLayout = () => {
   const [query, setQuery] = useState<string>('')
@@ -83,25 +84,6 @@ Page.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
-const fetchBooks = async (id: number) => {
-  const books = await prisma.book.findMany({ skip: 0, take: 10 })
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      listItems: true,
-    },
-  })
-
-  const listItems = user?.listItems
-
-  const bookIds = listItems?.map(li => li.bookId)
-
-  return { books: books?.filter(b => !bookIds?.includes(b.id)) ?? [] }
-}
-
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
@@ -128,3 +110,13 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions)
 
 export default Page
+
+const fetchBooks = async (id: number) => {
+  const books = await prisma.book.findMany({ skip: 0, take: 10 })
+
+  const listItems = await getListItems(id, prisma)
+
+  const bookIds = listItems?.map(li => li.bookId)
+
+  return { books: books?.filter(b => !bookIds?.includes(b.id)) ?? [] }
+}
