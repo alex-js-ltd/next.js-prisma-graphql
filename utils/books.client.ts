@@ -26,13 +26,13 @@ function useBook(id: string | string[] | undefined) {
   const bookId = Number(id)
   const queryClient = useQueryClient()
 
+  const cacheItem = queryClient.getQueryData<{ book: Book }>(['book', bookId])
+
   const result = useQuery<{ book: Book }, Error>({
     queryKey: ['book', bookId],
     queryFn: () => req(bookQueryDocument, { bookId }),
 
-    initialData: () => {
-      return queryClient.getQueryData(['book', bookId])
-    },
+    initialData: () => cacheItem,
   })
 
   return result?.data?.book ?? loadingBook
