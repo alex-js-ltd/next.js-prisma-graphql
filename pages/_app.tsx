@@ -20,7 +20,7 @@ type AppPropsWithLayout = AppProps & {
 }
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const [queryClient] = useState(() => new QueryClient(config))
+  const [queryClient] = useState(() => new QueryClient())
 
   const getLayout = Component.getLayout ?? (page => page)
 
@@ -32,13 +32,4 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <ReactQueryDevtools />
     </QueryClientProvider>
   )
-}
-
-const config = {
-  defaultOptions: {
-    queries: {
-      useErrorBoundary: true,
-      refetchOnWindowFocus: false,
-    },
-  },
 }
