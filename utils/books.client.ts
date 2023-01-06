@@ -33,6 +33,8 @@ function useBook(id: string | string[] | undefined) {
     queryFn: () => req(bookQueryDocument, { bookId }),
 
     initialData: () => cacheItem,
+    initialDataUpdatedAt: () =>
+      queryClient.getQueryState(['book', bookId])?.dataUpdatedAt,
   })
 
   return result?.data?.book ?? loadingBook
