@@ -9,7 +9,8 @@ function useBooks(query: string | null) {
   const result = useQuery<{ books: Book[] }, Error>({
     queryKey: ['bookSearch', { query }],
     queryFn: async () => req(booksQueryDocument, { query }),
-
+    staleTime: 10 * (60 * 1000), // 10 mins
+    cacheTime: 15 * (60 * 1000), // 15 mins
     onSuccess(data) {
       if (!data) return
       for (const book of data.books) {
