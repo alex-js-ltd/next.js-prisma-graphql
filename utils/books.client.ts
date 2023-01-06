@@ -7,7 +7,7 @@ function useBooks(query: string) {
   const queryClient = useQueryClient()
 
   const result = useQuery<{ books: Book[] }, Error>({
-    queryKey: ['books', query],
+    queryKey: ['bookSearch', { query }],
     queryFn: async () => req(booksQueryDocument, { query }),
 
     onSuccess(data) {
