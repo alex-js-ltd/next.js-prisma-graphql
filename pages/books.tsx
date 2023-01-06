@@ -81,12 +81,20 @@ Page.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
-export const getServerSideProps = async () => {
+const fetchBooks = async () => {
+  const books = await prisma.book.findMany({
+    skip: 0,
+    take: 10,
+  })
+  return books
+}
+
+export async function getStaticProps() {
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
-    queryKey: ['bookSearch', { query: 'prefetch' }],
-    queryFn: async () => await prisma.book.findMany(),
+    queryKey: ['bookSearch', { query: '' }],
+    queryFn: () => fetchBooks(),
   })
 
   return {
