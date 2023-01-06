@@ -24,10 +24,15 @@ function useBooks(query: string) {
 
 function useBook(id: string | string[] | undefined) {
   const bookId = Number(id)
+  const queryClient = useQueryClient()
 
   const result = useQuery<{ book: Book }, Error>({
     queryKey: ['book', bookId],
     queryFn: () => req(bookQueryDocument, { bookId }),
+
+    initialData: () => {
+      return queryClient.getQueryData(['book', bookId])
+    },
   })
 
   return result?.data?.book ?? loadingBook
