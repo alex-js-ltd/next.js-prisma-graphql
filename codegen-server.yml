@@ -6,3 +6,6 @@ generates:
       - typescript-resolvers
     config:
       contextType: pages/api/graphql#Context
+      mappers:
+        Book: .prisma/client#Book as BookModel
+        ListItem: .prisma/client#ListItem as ListItemModel

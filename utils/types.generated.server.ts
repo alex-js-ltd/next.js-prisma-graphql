@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { Book as BookModel, ListItem as ListItemModel } from '.prisma/client';
 import { Context } from 'pages/api/graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -198,12 +199,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Book: ResolverTypeWrapper<Book>;
+  Book: ResolverTypeWrapper<BookModel>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   CreateListItemInput: CreateListItemInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  ListItem: ResolverTypeWrapper<ListItem>;
+  ListItem: ResolverTypeWrapper<ListItemModel>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -213,12 +214,12 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Book: Book;
+  Book: BookModel;
   Boolean: Scalars['Boolean'];
   CreateListItemInput: CreateListItemInput;
   DateTime: Scalars['DateTime'];
   Int: Scalars['Int'];
-  ListItem: ListItem;
+  ListItem: ListItemModel;
   Mutation: {};
   Query: {};
   String: Scalars['String'];
