@@ -11,7 +11,7 @@ type BookRowProps<T> = {
   book: T
 }
 
-const BookRow = <T extends Book | ListItem>({ book }: BookRowProps<T>) => {
+const BookRow = <T extends Book & ListItem>({ book }: BookRowProps<T>) => {
   const { title, author, coverImageUrl, synopsis, publisher, id } = book
 
   const listItem = useListItem(book)
@@ -72,7 +72,7 @@ const BookRow = <T extends Book | ListItem>({ book }: BookRowProps<T>) => {
               >
                 {title}
               </h2>
-              {isFinished(book) ? <Rating listItem={book} /> : null}
+              {isFinished(book) ? <Rating listItem={book as ListItem} /> : null}
             </div>
             <div css={{ marginLeft: 10 }}>
               <div
