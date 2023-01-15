@@ -11,7 +11,7 @@ type BookRowProps<T> = {
   book: T
 }
 
-const BookRow = <T extends Book & ListItem>({ book }: BookRowProps<T>) => {
+const BookRow = <T extends Book | ListItem>({ book }: BookRowProps<T>) => {
   const { title, author, coverImageUrl, synopsis, publisher, id } = book
 
   const listItem = useListItem(book)
