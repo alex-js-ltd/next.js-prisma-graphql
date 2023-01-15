@@ -17,13 +17,10 @@ import { isFinished } from 'utils/type-guard.client'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import { Tooltip } from '@reach/tooltip'
 import debounceFn from 'debounce-fn'
-import invariant from 'tiny-invariant'
 
 const Book: NextPageWithLayout = () => {
   const router = useRouter()
   const { id } = router.query
-
-  invariant(id, 'bookId not available')
 
   const book = useBook(id)
   const listItem = useListItem(book)
