@@ -83,7 +83,7 @@ const Books: NextPageWithLayout = () => {
 Books.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
-export const getServerSideProp = withIronSessionSsr(async function ({
+export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
 }) {
@@ -99,7 +99,19 @@ export const getServerSideProp = withIronSessionSsr(async function ({
 
   const id = Number(req?.session?.user?.id)
 
-  await queryClient.prefetchQuery(['books'], () => prefetch(id))
+  const prefetch = async (id: number) => {
+    const books = await prisma.book.findMany()
+
+    const listItems = await getListItems(id, prisma)
+
+    const bookIds = listItems?.map(li => li.bookId)
+
+    return books?.filter(b => !bookIds?.includes(b.id)) ?? []
+  }
+
+  await queryClient.prefetchQuery(['bookSearch', { query: null }], () =>
+    prefetch(id),
+  )
 
   return {
     props: {
@@ -110,13 +122,3 @@ export const getServerSideProp = withIronSessionSsr(async function ({
 sessionOptions)
 
 export default Books
-
-const prefetch = async (id: number) => {
-  const books = await prisma.book.findMany()
-
-  const listItems = await getListItems(id, prisma)
-
-  const bookIds = listItems?.map(li => li.bookId)
-
-  return books?.filter(b => !bookIds?.includes(b.id)) ?? []
-}
