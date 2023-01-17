@@ -107,8 +107,12 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     const bookIds = listItems?.map(li => li.bookId)
 
     const userBooks = books?.filter(b => !bookIds?.includes(b.id)) ?? []
-    console.log(userBooks)
-    return { books: userBooks }
+
+    if (userBooks.length > 10) {
+      return { books: userBooks.slice(0, 10) }
+    } else {
+      return { books: userBooks }
+    }
   }
 
   await queryClient.prefetchQuery(['bookSearch', { query: '' }], () =>

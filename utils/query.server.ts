@@ -24,7 +24,9 @@ const Query: QueryResolvers = {
 
     const bookIds = listItems?.map(li => li.bookId)
 
-    return books?.filter(b => !bookIds?.includes(b.id)) ?? []
+    const userBooks = books?.filter(b => !bookIds?.includes(b.id)) ?? []
+
+    return userBooks
   }),
 
   book: authenticated(async (_parent, args, ctx) => {
