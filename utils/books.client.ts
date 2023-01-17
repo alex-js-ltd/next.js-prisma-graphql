@@ -6,14 +6,9 @@ import type { Book } from 'generated/graphql'
 function useBooks(query: string | null) {
   const queryClient = useQueryClient()
 
-  const queryKey = query === '' ? 'prefetch' : query
-
   const result = useQuery<{ books: Book[] }, Error>({
-    queryKey: ['bookSearch', { query: queryKey }],
+    queryKey: ['bookSearch', { query }],
     queryFn: async () => req(booksQueryDocument, { query }),
-    initialData: () => {
-      return queryClient.getQueryData(['bookSearch', { query: queryKey }])
-    },
 
     onSuccess(data) {
       if (!data) return
