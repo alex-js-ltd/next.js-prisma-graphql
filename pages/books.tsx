@@ -11,7 +11,7 @@ import { useBooks } from 'utils/books.client'
 import { BookRow } from 'comps/book-row'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from 'utils/session.server'
-import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { prisma } from 'utils/prisma.server'
 import { getListItems } from 'utils/query.server'
 
@@ -109,7 +109,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     return books?.filter(b => !bookIds?.includes(b.id)) ?? []
   }
 
-  await queryClient.prefetchQuery(['bookSearch', { query: null }], () =>
+  await queryClient.prefetchQuery(['bookSearch', { query: '' }], () =>
     prefetch(id),
   )
 
