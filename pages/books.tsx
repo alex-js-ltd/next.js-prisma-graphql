@@ -16,7 +16,7 @@ import { prisma } from 'utils/prisma.server'
 import { getListItems } from 'utils/query.server'
 
 const Books: NextPageWithLayout = () => {
-  const [query, setQuery] = useState<string | null>(null)
+  const [query, setQuery] = useState<string>('')
 
   const { books, error, isLoading, isError } = useBooks(query)
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
