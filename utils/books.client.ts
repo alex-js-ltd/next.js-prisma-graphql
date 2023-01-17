@@ -10,7 +10,10 @@ function useBooks(query: string | null) {
     queryKey: ['bookSearch', { query }],
     queryFn: async () => req(booksQueryDocument, { query }),
     initialData: () => {
-      return queryClient.getQueryData(['bookSearch', { query }])
+      return queryClient.getQueryData([
+        'bookSearch',
+        { query: query === null ? 'prefetch' : query },
+      ])
     },
 
     onSuccess(data) {

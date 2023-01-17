@@ -16,7 +16,7 @@ import { prisma } from 'utils/prisma.server'
 import { getListItems } from 'utils/query.server'
 
 const Books: NextPageWithLayout = () => {
-  const [query, setQuery] = useState<string>('')
+  const [query, setQuery] = useState<string | null>(null)
 
   const { books, error, isLoading, isError } = useBooks(query)
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -106,10 +106,12 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
     const bookIds = listItems?.map(li => li.bookId)
 
-    return books?.filter(b => !bookIds?.includes(b.id)) ?? []
+    const userBooks = books?.filter(b => !bookIds?.includes(b.id)) ?? []
+    console.log(userBooks)
+    return userBooks
   }
 
-  await queryClient.prefetchQuery(['bookSearch', { query: '' }], () =>
+  await queryClient.prefetchQuery(['bookSearch', { query: 'prefetch' }], () =>
     prefetch(id),
   )
 
