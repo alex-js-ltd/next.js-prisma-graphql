@@ -93,7 +93,11 @@ function Rating({ listItem }: Props) {
     >
       <span css={{ display: 'flex' }}>{stars}</span>
       {update.isError ? (
-        <ErrorMessage error={update.error} variant="inline" />
+        <ErrorMessage
+          error={update.error}
+          variant="inline"
+          css={{ marginLeft: 6, fontSize: '0.7em' }}
+        />
       ) : null}
     </div>
   )

@@ -1,6 +1,5 @@
-import React from 'react'
 import styled from '@emotion/styled'
-import { keyframes, CSSObject } from '@emotion/react'
+import { keyframes, CSSObject, Interpolation, Theme } from '@emotion/react'
 import Link from 'next/link'
 import * as colors from 'styles/colors'
 import * as mq from 'styles/media-queries'
@@ -128,14 +127,13 @@ const errorMessageVariants: ErrVariant = {
   inline: { display: 'inline-block' },
 }
 
-const ErrorMessage = ({
-  error,
-  variant = 'stacked',
-  ...props
-}: {
+type ErrMessage = {
   error: Error | null
   variant?: keyof ErrVariant
-}) => (
+  css?: Interpolation<Theme>
+}
+
+const ErrorMessage = ({ error, variant = 'stacked', ...props }: ErrMessage) => (
   <div
     role="alert"
     css={[{ color: colors.danger }, errorMessageVariants[variant]]}
