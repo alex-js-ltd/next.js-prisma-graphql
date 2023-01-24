@@ -130,7 +130,7 @@ const errorMessageVariants: ErrVariant = {
 type ErrMessage = {
   error: Error | null
   variant?: keyof ErrVariant
-  css?: Interpolation<Theme>
+  css?: Interpolation<any>
 }
 
 const ErrorMessage = ({ error, variant = 'stacked', ...props }: ErrMessage) => (
