@@ -19,6 +19,17 @@ import {
 } from 'utils/list-items.client'
 import type { Book, ListItem } from '@prisma/client'
 
+import type {
+  CreateListItemMutation,
+  UpdateListItemMutation,
+  RemoveListItemMutation,
+} from 'generated/graphql'
+
+type Action =
+  | CreateListItemMutation
+  | UpdateListItemMutation
+  | RemoveListItemMutation
+
 type TooolTipProps = {
   label?: string
   highlight?: string
@@ -33,7 +44,7 @@ function TooltipButton({
   icon,
   ...rest
 }: TooolTipProps) {
-  const { isLoading, isError, error, run } = useAsync()
+  const { isLoading, isError, error, run, data } = useAsync<Action>()
 
   const handleClick = () => {
     run(onClick())
