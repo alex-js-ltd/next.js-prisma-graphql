@@ -30,8 +30,6 @@ const Books: NextPageWithLayout = () => {
     setQuery(formElements.search.value)
   }
 
-  console.log(books)
-
   return (
     <div>
       <div>
