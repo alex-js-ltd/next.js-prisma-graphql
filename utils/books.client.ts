@@ -48,7 +48,7 @@ function useBook(id: string | string[] | undefined) {
 
 export { useBooks, useBook }
 
-const booksQueryDocument = graphql(/* GraphQL */ `
+export const booksQueryDocument = graphql(/* GraphQL */ `
   query books($query: String) {
     books(query: $query) {
       id
@@ -62,7 +62,7 @@ const booksQueryDocument = graphql(/* GraphQL */ `
   }
 `)
 
-const bookQueryDocument = graphql(/* GraphQL */ `
+export const bookQueryDocument = graphql(/* GraphQL */ `
   query book($bookId: Int) {
     book(id: $bookId) {
       id

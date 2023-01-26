@@ -1,4 +1,5 @@
 import { useReducer, useCallback } from 'react'
+import type { Reducer } from 'react'
 
 type AsyncState<DataType> =
   | {
@@ -71,7 +72,7 @@ function asyncReducer<DataType>(
 
 function useAsync<DataType>() {
   const [state, dispatch] = useReducer<
-    React.Reducer<AsyncState<DataType>, AsyncAction<DataType>>
+    Reducer<AsyncState<DataType>, AsyncAction<DataType>>
   >(asyncReducer, {
     status: 'idle',
     data: null,

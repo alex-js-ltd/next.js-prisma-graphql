@@ -730,4 +730,4 @@ export const booksData = [
     pageCount: 1008,
     publisher: 'Tor Books',
   },
-];
+]
