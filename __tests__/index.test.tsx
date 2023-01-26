@@ -10,12 +10,22 @@ import {
 import Books from 'pages/books'
 import { books } from 'mocks/mock-data'
 
-test('book names from mock should appear in dom', async () => {
+test('book titles from mock should appear in dom', async () => {
   render(<Books />)
 
   await waitFor(() => {
     for (const book of books) {
       expect(screen.getByText(book.title)).toBeInTheDocument()
+    }
+  })
+})
+
+test('book authors from mock should appear in dom', async () => {
+  render(<Books />)
+
+  await waitFor(() => {
+    for (const book of books) {
+      expect(screen.getByText(book.author)).toBeInTheDocument()
     }
   })
 })
