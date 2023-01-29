@@ -3,7 +3,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { graphql } from 'generated/gql'
 import type { Book } from 'generated/graphql'
 
-function useBooks(query: string | null) {
+export { useBooks, useBook, booksQueryDocument }
+
+const useBooks = (query: string | null) => {
   const queryClient = useQueryClient()
 
   const result = useQuery<{ books: Book[] }, Error>({
@@ -25,7 +27,7 @@ function useBooks(query: string | null) {
   return { ...result, books: result?.data?.books ?? [] }
 }
 
-function useBook(id: string | string[] | undefined) {
+const useBook = (id: string | string[] | undefined) => {
   const bookId = Number(id)
   const queryClient = useQueryClient()
 
@@ -46,9 +48,7 @@ function useBook(id: string | string[] | undefined) {
   return result?.data?.book ?? loadingBook
 }
 
-export { useBooks, useBook }
-
-export const booksQueryDocument = graphql(/* GraphQL */ `
+const booksQueryDocument = graphql(/* GraphQL */ `
   query books($query: String) {
     books(query: $query) {
       id

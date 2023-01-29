@@ -1,4 +1,6 @@
-function isFinished(valueToTest: any) {
+export { isFinished, isListItem }
+
+const isFinished = (valueToTest: any) => {
   return (
     valueToTest &&
     typeof valueToTest === 'object' &&
@@ -7,7 +9,7 @@ function isFinished(valueToTest: any) {
   )
 }
 
-function isListItem(valueToTest: any) {
+const isListItem = (valueToTest: any) => {
   return (
     valueToTest &&
     typeof valueToTest === 'object' &&
@@ -15,5 +17,3 @@ function isListItem(valueToTest: any) {
     typeof valueToTest['bookId'] === 'number'
   )
 }
-
-export { isFinished, isListItem }

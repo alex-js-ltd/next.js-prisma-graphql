@@ -9,7 +9,9 @@ import type {
 } from 'generated/graphql'
 import type { RequestDocument } from 'graphql-request'
 
-function useAuth(document: RequestDocument) {
+export { useAuth, useLogout, useUser }
+
+const useAuth = (document: RequestDocument) => {
   const router = useRouter()
   const queryClient = useQueryClient()
   return useMutation({
@@ -26,7 +28,7 @@ function useAuth(document: RequestDocument) {
   })
 }
 
-function useLogout() {
+const useLogout = () => {
   const router = useRouter()
   const queryClient = useQueryClient()
   return useMutation({
@@ -39,7 +41,7 @@ function useLogout() {
   })
 }
 
-function useUser() {
+const useUser = () => {
   const result = useQuery<{ user: User }, Error>({
     queryKey: ['user'],
     queryFn: async () => req(userQueryDocument),
@@ -47,8 +49,6 @@ function useUser() {
 
   return result?.data?.user
 }
-
-export { useAuth, useLogout, useUser }
 
 const registerMutationDocument = graphql(/* GraphQL */ `
   mutation register($email: String!, $password: String!) {

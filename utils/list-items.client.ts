@@ -8,7 +8,15 @@ import type {
 } from 'generated/graphql'
 import type { ListItem } from '@prisma/client'
 
-function useCreateListItem(book: Book) {
+export {
+  useCreateListItem,
+  useListItems,
+  useListItem,
+  useRemoveListItem,
+  useUpdateListItem,
+}
+
+const useCreateListItem = (book: Book) => {
   const queryClient = useQueryClient()
 
   const { id, ...rest } = book
@@ -23,7 +31,7 @@ function useCreateListItem(book: Book) {
   })
 }
 
-function useUpdateListItem() {
+const useUpdateListItem = () => {
   const queryClient = useQueryClient()
 
   return useMutation<ListItem, Error, UpdateListItemInput>({
@@ -36,7 +44,7 @@ function useUpdateListItem() {
   })
 }
 
-function useRemoveListItem() {
+const useRemoveListItem = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -49,7 +57,7 @@ function useRemoveListItem() {
   })
 }
 
-function useListItems() {
+const useListItems = () => {
   const result = useQuery<{ listItems: ListItem[] }, Error>({
     queryKey: ['list-items'],
     queryFn: async () => req(listItemsDocument),
@@ -58,7 +66,7 @@ function useListItems() {
   return result?.data?.listItems ?? []
 }
 
-function useListItem(element: any) {
+const useListItem = (element: any) => {
   const listItems = useListItems()
 
   if (isListItem(element)) {
@@ -68,14 +76,6 @@ function useListItem(element: any) {
   }
 
   return listItems?.find((li: ListItem) => li.bookId === element.id) ?? null
-}
-
-export {
-  useCreateListItem,
-  useListItems,
-  useListItem,
-  useRemoveListItem,
-  useUpdateListItem,
 }
 
 const createDocument = graphql(/* GraphQL */ `
