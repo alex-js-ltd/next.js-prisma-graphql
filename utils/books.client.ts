@@ -62,7 +62,7 @@ const booksQueryDocument = graphql(/* GraphQL */ `
   }
 `)
 
-export const bookQueryDocument = graphql(/* GraphQL */ `
+const bookQueryDocument = graphql(/* GraphQL */ `
   query book($bookId: Int) {
     book(id: $bookId) {
       id
