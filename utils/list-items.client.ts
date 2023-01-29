@@ -7,6 +7,7 @@ import type {
   Book,
 } from 'generated/graphql'
 import type { ListItem } from '@prisma/client'
+import { isListItem } from './type-guard.client'
 
 export {
   useCreateListItem,
@@ -114,12 +115,3 @@ const listItemsDocument = graphql(/* GraphQL */ `
     }
   }
 `)
-
-function isListItem(valueToTest: any) {
-  return (
-    valueToTest &&
-    typeof valueToTest === 'object' &&
-    'bookId' in valueToTest &&
-    typeof valueToTest['bookId'] === 'number'
-  )
-}
